@@ -91,9 +91,8 @@
             z-index: 2;
         }
 
-        /* ADMIN LOGO UPLOAD PANEL */
         .admin-logo-panel {
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.85);
             border: 2px solid var(--gold);
             border-radius: 1.5rem;
             padding: 1.5rem;
@@ -128,7 +127,6 @@
             justify-content: center;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            position: relative;
         }
         .logo-preview-box img {
             width: 100%;
@@ -170,9 +168,6 @@
             cursor: pointer;
             border: 2px solid var(--gold);
         }
-        .btn-save-logo:hover {
-            background: #388e3c;
-        }
         .btn-reset-logo {
             background: #c41e3a;
             color: white;
@@ -192,22 +187,17 @@
         .logo-saved-msg.show {
             display: block;
         }
-        .toggle-admin-btn {
+        .admin-logout-btn {
             background: transparent;
-            border: 1px dashed var(--gold);
-            color: var(--gold);
-            padding: 0.4rem 1rem;
+            border: 1px solid #e57373;
+            color: #e57373;
+            padding: 0.3rem 1rem;
             border-radius: 2rem;
             cursor: pointer;
-            font-size: 0.8rem;
-            margin-bottom: 1rem;
-            transition: 0.2s;
-        }
-        .toggle-admin-btn:hover {
-            background: rgba(212,175,55,0.1);
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
         }
 
-        /* Header */
         .header-bar {
             background: linear-gradient(180deg, #1a4d2e 0%, #0a2f1f 100%);
             border-radius: 2rem 2rem 0 0;
@@ -230,8 +220,8 @@
             padding: 0.6rem 1.5rem;
             border-radius: 2rem;
             font-weight: 700;
-            font-size: 1.1rem;
-            letter-spacing: 2px;
+            font-size: 1rem;
+            letter-spacing: 1px;
             border: 2px solid var(--gold);
             text-shadow: 0 0 10px #00ff41;
             box-shadow: 0 0 20px rgba(0,255,65,0.2);
@@ -247,7 +237,6 @@
             position: relative;
         }
 
-        /* Cricket Logo in form */
         .cricket-logo-section {
             display: flex;
             flex-direction: column;
@@ -350,7 +339,6 @@
             margin-top: 2px;
         }
 
-        /* Form headings */
         h2 {
             text-align: center;
             color: #1a3d1a;
@@ -570,6 +558,14 @@
             100% { transform: rotate(360deg); }
         }
 
+        .admin-hint {
+            text-align: center;
+            font-size: 0.6rem;
+            color: #ccc;
+            margin-top: 0.3rem;
+            opacity: 0.3;
+        }
+
         @media (max-width: 650px) {
             .row-double, .row-triple {
                 grid-template-columns: 1fr;
@@ -582,58 +578,45 @@
     </style>
 </head>
 <body>
-    <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="spinner"></div>
         <p style="color:#ffd966; margin-top:1rem; font-weight:700;">Submitting Registration...</p>
     </div>
 
     <div class="main-container">
-        <!-- 🔴 ADMIN LOGO UPLOAD PANEL - HIDDEN BY DEFAULT -->
-        <button class="toggle-admin-btn" onclick="toggleAdminPanel()" style="display:block; margin:0 auto 1rem;">
-            🔧 Admin: Upload Academy Logo
-        </button>
-        
+        <!-- Admin Panel - Hidden -->
         <div class="admin-logo-panel" id="adminLogoPanel">
-            <h3>🏏 UPLOAD YN CRICKET ACADEMY LOGO</h3>
+            <h3>🏏 ADMIN: Upload Academy Logo</h3>
             <div class="logo-upload-area">
                 <div class="logo-preview-box" id="adminLogoPreview">
                     <span class="logo-preview-placeholder" id="adminLogoPlaceholder">🏏</span>
                     <img id="adminLogoImg" src="" alt="Logo" style="display:none;">
                 </div>
                 <div class="logo-upload-buttons">
-                    <button class="btn-upload" onclick="document.getElementById('adminLogoInput').click()">
-                        📁 Choose Logo File
-                    </button>
-                    <button class="btn-save-logo" onclick="saveLogoToCode()">
-                        💾 Save Logo to Form
-                    </button>
-                    <button class="btn-reset-logo" onclick="resetLogoToDefault()">
-                        🔄 Reset to Default
-                    </button>
+                    <button class="btn-upload" onclick="document.getElementById('adminLogoInput').click()">📁 Choose Logo</button>
+                    <button class="btn-save-logo" onclick="saveLogoToCode()">💾 Save Logo</button>
+                    <button class="btn-reset-logo" onclick="resetLogoToDefault()">🔄 Reset</button>
                 </div>
                 <input type="file" id="adminLogoInput" accept="image/*" style="display:none;" onchange="previewAdminLogo(event)">
-                <p class="logo-saved-msg" id="logoSavedMsg">✅ Logo saved successfully! It will appear on the form.</p>
-                <small style="color:#ccc; font-size:0.75rem;">Upload PNG, JPG, SVG, or WebP (Max 5MB). Best size: 300x300px square.</small>
+                <p class="logo-saved-msg" id="logoSavedMsg">✅ Logo saved!</p>
+                <small style="color:#ccc; font-size:0.75rem;">PNG, JPG, SVG (Max 5MB)</small>
+                <button class="admin-logout-btn" onclick="closeAdminPanel()">🔒 Close Admin Panel</button>
             </div>
         </div>
 
-        <!-- Header -->
         <div class="header-bar">
             <div style="color:#ffd966; font-weight:800; font-size:1rem; letter-spacing:1px;">
                 🏏 YN CRICKET ACADEMY (PSN)
             </div>
             <div class="id-display" id="studentIdDisplay">
-                YN-PSN-2026-0000
+                YN-PSN-202627-0005
             </div>
         </div>
 
         <div class="form-container">
-            <!-- Cricket Logo in Form -->
             <div class="cricket-logo-section">
                 <div class="cricket-logo-container">
                     <div class="cricket-logo" id="formCricketLogo">
-                        <!-- Default logo design -->
                         <div class="cricket-logo-design" id="defaultLogoDesign">
                             <div class="logo-stumps" style="position:relative;">
                                 <div class="bail"></div>
@@ -645,8 +628,7 @@
                             <div class="cricket-ball-logo"></div>
                             <span class="logo-text-yn">YN</span>
                         </div>
-                        <!-- Uploaded logo image -->
-                        <img id="formLogoImg" src="" alt="Academy Logo" style="display:none; width:100%; height:100%; object-fit:cover; border-radius:50%; position:absolute; top:0; left:0;">
+                        <img id="formLogoImg" src="" alt="Logo" style="display:none; width:100%; height:100%; object-fit:cover; border-radius:50%; position:absolute; top:0; left:0;">
                     </div>
                 </div>
                 <small style="color:#666; font-size:0.7rem;">YN Cricket Academy (PSN)</small>
@@ -654,7 +636,6 @@
 
             <h2>📋 REGISTRATION FORM 2026-27</h2>
 
-            <!-- Success Message -->
             <div class="success-message" id="successMessage">
                 <h3 style="color:#2e7d32;">✅ REGISTRATION SUCCESSFUL!</h3>
                 <p>Student ID: <strong id="successId" style="font-size:1.3rem;"></strong></p>
@@ -665,13 +646,11 @@
 
             <form id="registrationForm" onsubmit="return handleSubmit(event)" novalidate>
                 <div class="form-grid" id="formContent">
-                    <!-- Student ID -->
                     <div class="input-group">
                         <label>🆔 Student ID (Auto-Generated)</label>
                         <input type="text" id="studentId" readonly style="background:#e8f5e9; font-weight:700; letter-spacing:1px; font-family:'Courier New',monospace;">
                     </div>
 
-                    <!-- Personal Info -->
                     <span class="section-title">👤 PERSONAL DETAILS</span>
                     <div class="row-double">
                         <div class="input-group">
@@ -700,14 +679,13 @@
                     <div class="input-group">
                         <label>📧 Email ID <span class="required-star">*</span></label>
                         <input type="email" id="email" placeholder="example@email.com" required>
-                        <small style="color:#666; font-size:0.75rem;">Confirmation & fee receipts sent to this email</small>
+                        <small style="color:#666; font-size:0.75rem;">Confirmation sent to this email</small>
                     </div>
                     <div class="input-group">
                         <label>📍 Address <span class="required-star">*</span></label>
                         <textarea id="address" rows="2" placeholder="Full address" required></textarea>
                     </div>
 
-                    <!-- Old Student -->
                     <div style="display:flex; align-items:center; gap:1rem; background:#e6f0da; padding:0.6rem 1.2rem; border-radius:2rem; flex-wrap:wrap;">
                         <label style="margin:0; gap:0.5rem;">
                             <input type="checkbox" id="oldStudent" onchange="updateFeeSummary()"> 
@@ -716,7 +694,6 @@
                         <span id="regFeeDisplay" style="font-weight:bold; margin-left:auto;">Reg: ₹500</span>
                     </div>
 
-                    <!-- Fees Section -->
                     <span class="section-title">💰 FEES & PLAN</span>
                     <div class="row-double">
                         <div class="input-group">
@@ -747,7 +724,6 @@
                         </select>
                     </div>
 
-                    <!-- Coaching Days -->
                     <div class="input-group">
                         <label>🗓️ Coaching Days (Thu–Sun) <span class="required-star">*</span></label>
                         <div class="batch-days" id="dayChips">
@@ -759,7 +735,6 @@
                         <small id="dayHint" style="color:#8b6f30;">Select days matching your batch.</small>
                     </div>
 
-                    <!-- Jersey -->
                     <div class="jersey-option">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
                             <strong>👕 Jersey Fee (Mandatory for ALL)</strong>
@@ -771,7 +746,6 @@
                         </label>
                     </div>
 
-                    <!-- Fee Summary -->
                     <div class="fee-box">
                         <div style="display:flex; justify-content:space-between;">
                             <span>📊 TOTAL FEE:</span>
@@ -785,7 +759,6 @@
                         <div id="discountNote" style="font-size:0.8rem; color:#1e4a2d; margin-top:0.3rem;"></div>
                     </div>
 
-                    <!-- Payment -->
                     <span class="section-title">💳 PAYMENT DETAILS</span>
                     <div class="row-double">
                         <div class="input-group">
@@ -806,7 +779,6 @@
                         <input type="file" id="receipt" accept="image/*,.pdf">
                     </div>
 
-                    <!-- Coaching Info -->
                     <span class="section-title">🏏 COACHING INFO</span>
                     <div class="row-double">
                         <div class="input-group">
@@ -829,7 +801,6 @@
                         <input type="text" id="medical" placeholder="If any, or type 'None'">
                     </div>
 
-                    <!-- Notes -->
                     <div class="note-box">
                         <strong>📌 TERMS & CONDITIONS:</strong>
                         <ul>
@@ -851,31 +822,61 @@
                 </div>
             </form>
         </div>
+        <p class="admin-hint">YN Cricket Academy (PSN) © 2026-27</p>
     </div>
 
     <script>
-        // ==================== ADMIN LOGO MANAGEMENT ====================
-        let savedLogoData = localStorage.getItem('ynCricketAcademyLogo') || null;
+        // ==================== ADMIN ACCESS ====================
+        const ADMIN_SECRET = 'ynadmin2026';
+        let isAdminLoggedIn = sessionStorage.getItem('ynAdminLoggedIn') === 'true';
 
-        function toggleAdminPanel() {
-            const panel = document.getElementById('adminLogoPanel');
-            panel.classList.toggle('active');
+        function checkAdminAccess() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const adminKey = urlParams.get('admin');
+            if (adminKey === ADMIN_SECRET) {
+                isAdminLoggedIn = true;
+                sessionStorage.setItem('ynAdminLoggedIn', 'true');
+                openAdminPanel();
+                window.history.replaceState({}, document.title, window.location.pathname);
+            } else if (isAdminLoggedIn) {
+                openAdminPanel();
+            }
         }
+
+        function openAdminPanel() {
+            document.getElementById('adminLogoPanel').classList.add('active');
+            isAdminLoggedIn = true;
+            sessionStorage.setItem('ynAdminLoggedIn', 'true');
+        }
+
+        function closeAdminPanel() {
+            document.getElementById('adminLogoPanel').classList.remove('active');
+            isAdminLoggedIn = false;
+            sessionStorage.removeItem('ynAdminLoggedIn');
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+                e.preventDefault();
+                if (isAdminLoggedIn) {
+                    closeAdminPanel();
+                } else {
+                    const password = prompt('Enter admin password:');
+                    if (password === ADMIN_SECRET) openAdminPanel();
+                    else if (password !== null) alert('Incorrect!');
+                }
+            }
+        });
+
+        // ==================== LOGO MANAGEMENT ====================
+        let savedLogoData = localStorage.getItem('ynCricketAcademyLogo') || null;
 
         function previewAdminLogo(event) {
             const file = event.target.files[0];
             if (!file) return;
-            
             const validTypes = ['image/jpeg', 'image/png', 'image/svg+xml', 'image/webp'];
-            if (!validTypes.includes(file.type)) {
-                alert('Please upload JPG, PNG, SVG, or WebP.');
-                return;
-            }
-            if (file.size > 5 * 1024 * 1024) {
-                alert('File size should be less than 5MB.');
-                return;
-            }
-
+            if (!validTypes.includes(file.type)) { alert('JPG, PNG, SVG, WebP only.'); return; }
+            if (file.size > 5*1024*1024) { alert('Under 5MB only.'); return; }
             const reader = new FileReader();
             reader.onload = function(e) {
                 document.getElementById('adminLogoImg').src = e.target.result;
@@ -886,70 +887,36 @@
         }
 
         function saveLogoToCode() {
-            const adminImg = document.getElementById('adminLogoImg');
-            if (!adminImg.src || adminImg.style.display === 'none') {
-                alert('Please upload a logo first.');
-                return;
-            }
-            
-            // Save to localStorage
-            const logoData = adminImg.src;
-            localStorage.setItem('ynCricketAcademyLogo', logoData);
-            savedLogoData = logoData;
-            
-            // Update form logo
-            updateFormLogo(logoData);
-            
-            // Show success message
+            const img = document.getElementById('adminLogoImg');
+            if (!img.src || img.style.display === 'none') { alert('Upload logo first.'); return; }
+            localStorage.setItem('ynCricketAcademyLogo', img.src);
+            savedLogoData = img.src;
+            updateFormLogo(img.src);
             const msg = document.getElementById('logoSavedMsg');
             msg.classList.add('show');
             setTimeout(() => msg.classList.remove('show'), 3000);
-            
-            console.log('✅ Logo saved to code! It will persist until reset.');
         }
 
         function resetLogoToDefault() {
             localStorage.removeItem('ynCricketAcademyLogo');
             savedLogoData = null;
-            
-            // Reset admin preview
             document.getElementById('adminLogoImg').src = '';
             document.getElementById('adminLogoImg').style.display = 'none';
             document.getElementById('adminLogoPlaceholder').style.display = 'block';
             document.getElementById('adminLogoInput').value = '';
-            
-            // Reset form logo
             updateFormLogo(null);
-            
-            const msg = document.getElementById('logoSavedMsg');
-            msg.textContent = '🔄 Logo reset to default cricket design.';
-            msg.classList.add('show');
-            setTimeout(() => {
-                msg.textContent = '✅ Logo saved successfully! It will appear on the form.';
-                msg.classList.remove('show');
-            }, 3000);
         }
 
         function updateFormLogo(logoData) {
-            const formImg = document.getElementById('formLogoImg');
-            const defaultDesign = document.getElementById('defaultLogoDesign');
-            
-            if (logoData) {
-                formImg.src = logoData;
-                formImg.style.display = 'block';
-                defaultDesign.style.display = 'none';
-            } else {
-                formImg.src = '';
-                formImg.style.display = 'none';
-                defaultDesign.style.display = 'flex';
-            }
+            const fi = document.getElementById('formLogoImg');
+            const dd = document.getElementById('defaultLogoDesign');
+            if (logoData) { fi.src = logoData; fi.style.display = 'block'; dd.style.display = 'none'; }
+            else { fi.src = ''; fi.style.display = 'none'; dd.style.display = 'flex'; }
         }
 
-        // Load saved logo on page load
         function loadSavedLogo() {
             if (savedLogoData) {
                 updateFormLogo(savedLogoData);
-                // Also update admin preview
                 document.getElementById('adminLogoImg').src = savedLogoData;
                 document.getElementById('adminLogoImg').style.display = 'block';
                 document.getElementById('adminLogoPlaceholder').style.display = 'none';
@@ -957,14 +924,25 @@
         }
 
         // ==================== CONFIG ====================
-        const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbxdKwevlVtmwAEhl28E4NLeDlBqQ7DWVcQlIJCucLCr03iujx-xZCrcu6kqFIF__gjUVA/exec';
+        const GOOGLE_SHEET_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
 
-        // ==================== ID GENERATION ====================
-        function generateStudentId() {
-            return `YN-PSN-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+        // ==================== SEQUENTIAL ID GENERATION (START: 0005) ====================
+        function getNextStudentId() {
+            // Get last used number from localStorage
+            let lastId = parseInt(localStorage.getItem('ynLastStudentId')) || 4; // Start before 0005
+            let nextId = lastId + 1;
+            // Save the new last ID
+            localStorage.setItem('ynLastStudentId', nextId);
+            // Format as 4-digit with leading zeros
+            return 'YN-PSN-202627-' + String(nextId).padStart(4, '0');
         }
 
-        let currentStudentId = generateStudentId();
+        // Initialize if first time
+        if (!localStorage.getItem('ynLastStudentId')) {
+            localStorage.setItem('ynLastStudentId', '4'); // So first ID is 0005
+        }
+
+        let currentStudentId = getNextStudentId();
         document.getElementById('studentId').value = currentStudentId;
         document.getElementById('studentIdDisplay').textContent = currentStudentId;
 
@@ -982,7 +960,6 @@
             return Math.round((q1 + q2 + q3) * 0.9);
         }
 
-        // ==================== DAY CHIPS ====================
         const dayChips = document.querySelectorAll('.day-chip');
         const dayCheckboxes = document.querySelectorAll('.day-select');
 
@@ -1004,7 +981,6 @@
             });
         }
 
-        // ==================== FEE UPDATE ====================
         function updateFeeSummary() {
             const planType = document.getElementById('planType').value;
             const quarter = document.getElementById('quarter').value;
@@ -1066,7 +1042,6 @@
             return true;
         }
 
-        // ==================== SUBMIT ====================
         async function handleSubmit(event) {
             event.preventDefault();
             if (!document.getElementById('consent').checked) { alert('Agree to terms.'); return false; }
@@ -1113,7 +1088,7 @@
                 experience: document.getElementById('experience').value,
                 playingStyle: document.getElementById('playingStyle').value,
                 medical: document.getElementById('medical').value || 'None',
-                logoActive: savedLogoData ? 'Yes' : 'No', consent: true
+                consent: true
             };
 
             try {
@@ -1136,19 +1111,22 @@
             document.getElementById('formContent').style.display = 'flex';
             document.getElementById('successMessage').classList.remove('show');
             document.getElementById('submitBtn').disabled = false;
-            currentStudentId = generateStudentId();
+            
+            // Generate NEW sequential ID for next student
+            currentStudentId = getNextStudentId();
             document.getElementById('studentId').value = currentStudentId;
             document.getElementById('studentIdDisplay').textContent = currentStudentId;
+            
             dayCheckboxes.forEach(cb => { cb.checked = false; cb.disabled = false; });
             syncDayChips(); updateFeeSummary();
             document.getElementById('paidDate').value = new Date().toISOString().split('T')[0];
         }
 
-        // ==================== INIT ====================
         window.onload = function() {
             document.getElementById('paidDate').value = new Date().toISOString().split('T')[0];
             document.getElementById('dob').max = new Date().toISOString().split('T')[0];
             loadSavedLogo();
+            checkAdminAccess();
             updateFeeSummary();
         };
 
