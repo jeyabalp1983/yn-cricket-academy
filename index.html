@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>YN Cricket Academy (PSN) | Registration 2026-27</title>
+    <style>
+        :root {
+            --pitch-green: #1b5e20;
+            --deep-green: #0a2f1f;
+            --cricket-red: #c41e3a;
+            --gold: #d4af37;
+            --gold-dark: #b8941f;
+            --cream: #f5f0e1;
+            --white: #ffffff;
+            --leather-brown: #8b5e3c;
+            --text-dark: #1a1a1a;
+            --shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: 
+                linear-gradient(135deg, #0d4f1a 0%, #1a6b2e 25%, #0a3d14 50%, #1b5e20 75%, #0d4f1a 100%);
+            background-size: 400% 400%;
+            animation: pitchMove 20s ease infinite;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            padding: 1.5rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        @keyframes pitchMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 40px,
+                    rgba(255,255,255,0.02) 40px,
+                    rgba(255,255,255,0.02) 41px
+                );
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            top: 5%;
+            right: 5%;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle at 35% 35%, #c41e3a 0%, #8b0000 100%);
+            border-radius: 50%;
+            box-shadow: 
+                0 8px 25px rgba(0,0,0,0.4),
+                inset -3px -3px 8px rgba(0,0,0,0.5),
+                inset 3px 3px 8px rgba(255,255,255,0.2);
+            z-index: 0;
+            opacity: 0.25;
+            animation: ballFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes ballFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .main-container {
+            max-width: 900px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ADMIN LOGO UPLOAD PANEL */
+        .admin-logo-panel {
+            background: rgba(0,0,0,0.8);
+            border: 2px solid var(--gold);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+            display: none;
+        }
+        .admin-logo-panel.active {
+            display: block;
+        }
+        .admin-logo-panel h3 {
+            color: var(--gold);
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+        .logo-upload-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        .logo-preview-box {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid var(--gold);
+            background: #0a2f1f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+        }
+        .logo-preview-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .logo-preview-placeholder {
+            font-size: 3rem;
+            color: var(--gold);
+        }
+        .logo-upload-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .btn-upload {
+            background: var(--gold);
+            color: #0a2f1f;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 2rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: 2px solid #0a2f1f;
+            transition: 0.2s;
+            font-size: 0.9rem;
+        }
+        .btn-upload:hover {
+            background: #e5b73c;
+        }
+        .btn-save-logo {
+            background: #2e7d32;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 2rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: 2px solid var(--gold);
+        }
+        .btn-save-logo:hover {
+            background: #388e3c;
+        }
+        .btn-reset-logo {
+            background: #c41e3a;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 2rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: 2px solid var(--gold);
+        }
+        .logo-saved-msg {
+            color: #4caf50;
+            font-weight: 700;
+            font-size: 0.85rem;
+            display: none;
+        }
+        .logo-saved-msg.show {
+            display: block;
+        }
+        .toggle-admin-btn {
+            background: transparent;
+            border: 1px dashed var(--gold);
+            color: var(--gold);
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+        }
+        .toggle-admin-btn:hover {
+            background: rgba(212,175,55,0.1);
+        }
+
+        /* Header */
+        .header-bar {
+            background: linear-gradient(180deg, #1a4d2e 0%, #0a2f1f 100%);
+            border-radius: 2rem 2rem 0 0;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border: 2px solid var(--gold);
+            border-bottom: 3px solid var(--cricket-red);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .id-display {
+            background: #000;
+            color: #00ff41;
+            font-family: 'Courier New', monospace;
+            padding: 0.6rem 1.5rem;
+            border-radius: 2rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            border: 2px solid var(--gold);
+            text-shadow: 0 0 10px #00ff41;
+            box-shadow: 0 0 20px rgba(0,255,65,0.2);
+        }
+
+        .form-container {
+            background: linear-gradient(180deg, #faf6ed 0%, #f5edd6 100%);
+            border-radius: 0 0 3rem 3rem;
+            box-shadow: var(--shadow), 0 0 0 3px var(--gold);
+            padding: 2rem 2.2rem;
+            border: 2px solid var(--gold);
+            border-top: 2px dashed var(--gold);
+            position: relative;
+        }
+
+        /* Cricket Logo in form */
+        .cricket-logo-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            gap: 0.5rem;
+        }
+
+        .cricket-logo-container {
+            position: relative;
+            width: 130px;
+            height: 130px;
+        }
+
+        .cricket-logo {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: linear-gradient(180deg, #1a5c2a 0%, #0a2f1f 100%);
+            border: 4px solid var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                0 10px 30px rgba(0,0,0,0.5),
+                0 0 0 8px rgba(212,175,55,0.15);
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .cricket-logo-design {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            position: relative;
+        }
+
+        .logo-stumps {
+            display: flex;
+            gap: 5px;
+            align-items: flex-end;
+            position: relative;
+        }
+
+        .stump {
+            width: 6px;
+            height: 35px;
+            background: linear-gradient(180deg, #f5deb3 0%, #deb887 100%);
+            border-radius: 3px 3px 0 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .bail {
+            width: 28px;
+            height: 4px;
+            background: #f5deb3;
+            border-radius: 2px;
+            position: absolute;
+            top: 8px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .cricket-bat {
+            width: 8px;
+            height: 45px;
+            background: linear-gradient(180deg, #d4a574 0%, #c4956a 50%, #8b5e3c 100%);
+            border-radius: 4px 4px 2px 2px;
+            position: absolute;
+            right: -18px;
+            bottom: 5px;
+            transform: rotate(-15deg);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+        }
+
+        .cricket-ball-logo {
+            width: 14px;
+            height: 14px;
+            background: radial-gradient(circle at 35% 35%, #c41e3a, #8b0000);
+            border-radius: 50%;
+            position: absolute;
+            left: -20px;
+            top: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            animation: ballBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes ballBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        .logo-text-yn {
+            color: var(--gold);
+            font-weight: 900;
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            margin-top: 2px;
+        }
+
+        /* Form headings */
+        h2 {
+            text-align: center;
+            color: #1a3d1a;
+            margin: 0.5rem 0 1.5rem;
+            font-weight: 800;
+            font-size: 1.5rem;
+            border-bottom: 3px dashed #c41e3a;
+            padding-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .form-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .section-title {
+            font-weight: 700;
+            color: white;
+            font-size: 0.9rem;
+            background: var(--cricket-red);
+            padding: 0.5rem 1.2rem;
+            border-radius: 2rem;
+            display: inline-block;
+            margin-top: 0.3rem;
+            letter-spacing: 0.5px;
+            box-shadow: 0 3px 8px rgba(196,30,58,0.3);
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        label {
+            font-weight: 600;
+            color: #2d4a22;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .required-star {
+            color: var(--cricket-red);
+            font-weight: bold;
+        }
+        input, select, textarea {
+            padding: 0.8rem 1.2rem;
+            border: 2px solid #c9a94b;
+            border-radius: 1.5rem;
+            font-size: 0.95rem;
+            background: #fffef7;
+            transition: 0.2s;
+            outline: none;
+            font-family: inherit;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--cricket-red);
+            box-shadow: 0 0 0 4px rgba(196,30,58,0.15);
+        }
+        .row-double {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .row-triple {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .fee-box {
+            background: linear-gradient(135deg, #fff8e7, #fef3d0);
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            border-left: 6px solid var(--cricket-red);
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .fee-breakdown {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .batch-days {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 0.2rem;
+        }
+        .day-chip {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: #fffbec;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #c9a94b;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 500;
+            user-select: none;
+        }
+        .day-chip.selected {
+            background: var(--cricket-red);
+            color: white;
+            font-weight: 700;
+            border-color: #8b0000;
+        }
+        .day-chip.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            background: #e0d5b0;
+        }
+        .day-chip input {
+            display: none;
+        }
+
+        .jersey-option {
+            background: #f0f7e6;
+            border-radius: 1.2rem;
+            padding: 1rem;
+            border: 1px solid #c9a94b;
+        }
+
+        .note-box {
+            background: #fcf5e3;
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            border: 1px solid #deb887;
+            font-size: 0.85rem;
+            color: #3b3b1f;
+        }
+        .note-box ul {
+            margin-top: 0.4rem;
+            padding-left: 1.3rem;
+        }
+
+        .btn-submit {
+            background: linear-gradient(180deg, #c41e3a, #8b0000);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 3rem;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: white;
+            box-shadow: 0 10px 25px rgba(196,30,58,0.4);
+            cursor: pointer;
+            letter-spacing: 1px;
+            border: 2px solid var(--gold);
+            transition: 0.2s;
+            width: 100%;
+            text-transform: uppercase;
+        }
+        .btn-submit:hover {
+            filter: brightness(1.15);
+            transform: translateY(-2px);
+        }
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .badge {
+            background: var(--cricket-red);
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .success-message {
+            display: none;
+            background: #e8f5e9;
+            border: 2px solid #2e7d32;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: 1rem;
+        }
+        .success-message.show {
+            display: block;
+        }
+
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.75);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .loading-overlay.active {
+            display: flex;
+        }
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 6px solid var(--gold);
+            border-top: 6px solid var(--cricket-red);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 650px) {
+            .row-double, .row-triple {
+                grid-template-columns: 1fr;
+            }
+            .header-bar {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <p style="color:#ffd966; margin-top:1rem; font-weight:700;">Submitting Registration...</p>
+    </div>
+
+    <div class="main-container">
+        <!-- 🔴 ADMIN LOGO UPLOAD PANEL - HIDDEN BY DEFAULT -->
+        <button class="toggle-admin-btn" onclick="toggleAdminPanel()" style="display:block; margin:0 auto 1rem;">
+            🔧 Admin: Upload Academy Logo
+        </button>
+        
+        <div class="admin-logo-panel" id="adminLogoPanel">
+            <h3>🏏 UPLOAD YN CRICKET ACADEMY LOGO</h3>
+            <div class="logo-upload-area">
+                <div class="logo-preview-box" id="adminLogoPreview">
+                    <span class="logo-preview-placeholder" id="adminLogoPlaceholder">🏏</span>
+                    <img id="adminLogoImg" src="" alt="Logo" style="display:none;">
+                </div>
+                <div class="logo-upload-buttons">
+                    <button class="btn-upload" onclick="document.getElementById('adminLogoInput').click()">
+                        📁 Choose Logo File
+                    </button>
+                    <button class="btn-save-logo" onclick="saveLogoToCode()">
+                        💾 Save Logo to Form
+                    </button>
+                    <button class="btn-reset-logo" onclick="resetLogoToDefault()">
+                        🔄 Reset to Default
+                    </button>
+                </div>
+                <input type="file" id="adminLogoInput" accept="image/*" style="display:none;" onchange="previewAdminLogo(event)">
+                <p class="logo-saved-msg" id="logoSavedMsg">✅ Logo saved successfully! It will appear on the form.</p>
+                <small style="color:#ccc; font-size:0.75rem;">Upload PNG, JPG, SVG, or WebP (Max 5MB). Best size: 300x300px square.</small>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header-bar">
+            <div style="color:#ffd966; font-weight:800; font-size:1rem; letter-spacing:1px;">
+                🏏 YN CRICKET ACADEMY (PSN)
+            </div>
+            <div class="id-display" id="studentIdDisplay">
+                YN-PSN-2026-0000
+            </div>
+        </div>
+
+        <div class="form-container">
+            <!-- Cricket Logo in Form -->
+            <div class="cricket-logo-section">
+                <div class="cricket-logo-container">
+                    <div class="cricket-logo" id="formCricketLogo">
+                        <!-- Default logo design -->
+                        <div class="cricket-logo-design" id="defaultLogoDesign">
+                            <div class="logo-stumps" style="position:relative;">
+                                <div class="bail"></div>
+                                <div class="stump"></div>
+                                <div class="stump"></div>
+                                <div class="stump"></div>
+                            </div>
+                            <div class="cricket-bat"></div>
+                            <div class="cricket-ball-logo"></div>
+                            <span class="logo-text-yn">YN</span>
+                        </div>
+                        <!-- Uploaded logo image -->
+                        <img id="formLogoImg" src="" alt="Academy Logo" style="display:none; width:100%; height:100%; object-fit:cover; border-radius:50%; position:absolute; top:0; left:0;">
+                    </div>
+                </div>
+                <small style="color:#666; font-size:0.7rem;">YN Cricket Academy (PSN)</small>
+            </div>
+
+            <h2>📋 REGISTRATION FORM 2026-27</h2>
+
+            <!-- Success Message -->
+            <div class="success-message" id="successMessage">
+                <h3 style="color:#2e7d32;">✅ REGISTRATION SUCCESSFUL!</h3>
+                <p>Student ID: <strong id="successId" style="font-size:1.3rem;"></strong></p>
+                <p style="margin-top:0.5rem;">📧 Confirmation sent to your email</p>
+                <p>📱 WhatsApp confirmation ready</p>
+                <button onclick="resetForm()" style="margin-top:1rem; padding:0.5rem 1.5rem; border-radius:2rem; background:#c41e3a; color:white; border:none; cursor:pointer; font-weight:700;">Register Another Student</button>
+            </div>
+
+            <form id="registrationForm" onsubmit="return handleSubmit(event)" novalidate>
+                <div class="form-grid" id="formContent">
+                    <!-- Student ID -->
+                    <div class="input-group">
+                        <label>🆔 Student ID (Auto-Generated)</label>
+                        <input type="text" id="studentId" readonly style="background:#e8f5e9; font-weight:700; letter-spacing:1px; font-family:'Courier New',monospace;">
+                    </div>
+
+                    <!-- Personal Info -->
+                    <span class="section-title">👤 PERSONAL DETAILS</span>
+                    <div class="row-double">
+                        <div class="input-group">
+                            <label>Student Full Name <span class="required-star">*</span></label>
+                            <input type="text" id="studentName" placeholder="Enter full name" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Parent / Guardian Name <span class="required-star">*</span></label>
+                            <input type="text" id="parentName" placeholder="Father/Mother/Guardian" required>
+                        </div>
+                    </div>
+                    <div class="row-triple">
+                        <div class="input-group">
+                            <label>🎂 Age <span class="required-star">*</span></label>
+                            <input type="number" id="age" min="5" max="25" placeholder="Years" required>
+                        </div>
+                        <div class="input-group">
+                            <label>📅 Date of Birth <span class="required-star">*</span></label>
+                            <input type="date" id="dob" required>
+                        </div>
+                        <div class="input-group">
+                            <label>📱 WhatsApp/Mobile <span class="required-star">*</span></label>
+                            <input type="tel" id="mobile" placeholder="10-digit number" pattern="[0-9]{10}" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>📧 Email ID <span class="required-star">*</span></label>
+                        <input type="email" id="email" placeholder="example@email.com" required>
+                        <small style="color:#666; font-size:0.75rem;">Confirmation & fee receipts sent to this email</small>
+                    </div>
+                    <div class="input-group">
+                        <label>📍 Address <span class="required-star">*</span></label>
+                        <textarea id="address" rows="2" placeholder="Full address" required></textarea>
+                    </div>
+
+                    <!-- Old Student -->
+                    <div style="display:flex; align-items:center; gap:1rem; background:#e6f0da; padding:0.6rem 1.2rem; border-radius:2rem; flex-wrap:wrap;">
+                        <label style="margin:0; gap:0.5rem;">
+                            <input type="checkbox" id="oldStudent" onchange="updateFeeSummary()"> 
+                            <span style="font-weight:700;">⭐ Old Student (Reg. fee already paid)</span>
+                        </label>
+                        <span id="regFeeDisplay" style="font-weight:bold; margin-left:auto;">Reg: ₹500</span>
+                    </div>
+
+                    <!-- Fees Section -->
+                    <span class="section-title">💰 FEES & PLAN</span>
+                    <div class="row-double">
+                        <div class="input-group">
+                            <label>📆 Plan Type <span class="required-star">*</span></label>
+                            <select id="planType" required onchange="updateFeeSummary()">
+                                <option value="">-- Select Plan --</option>
+                                <option value="quarterly">Quarterly (Q1/Q2/Q3)</option>
+                                <option value="full10">Full 10 Months (Jun–Mar) 🔥 10% OFF</option>
+                            </select>
+                        </div>
+                        <div class="input-group" id="quarterGroup">
+                            <label>📅 Quarter</label>
+                            <select id="quarter" onchange="updateFeeSummary()">
+                                <option value="">-- Choose --</option>
+                                <option value="Q1">Q1 (Jun–Sep 2026) 4m</option>
+                                <option value="Q2">Q2 (Oct–Dec 2026) 3m</option>
+                                <option value="Q3">Q3 (Jan–Mar 2027) 3m</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>⚡ Batch (Days/Week) <span class="required-star">*</span></label>
+                        <select id="batchDays" required onchange="updateFeeSummary()">
+                            <option value="">-- Select --</option>
+                            <option value="2">2 Days / week</option>
+                            <option value="3">3 Days / week</option>
+                            <option value="4">4 Days / week</option>
+                        </select>
+                    </div>
+
+                    <!-- Coaching Days -->
+                    <div class="input-group">
+                        <label>🗓️ Coaching Days (Thu–Sun) <span class="required-star">*</span></label>
+                        <div class="batch-days" id="dayChips">
+                            <label class="day-chip" data-day="Thursday"><input type="checkbox" class="day-select" value="Thursday"> Thu</label>
+                            <label class="day-chip" data-day="Friday"><input type="checkbox" class="day-select" value="Friday"> Fri</label>
+                            <label class="day-chip" data-day="Saturday"><input type="checkbox" class="day-select" value="Saturday"> Sat</label>
+                            <label class="day-chip" data-day="Sunday"><input type="checkbox" class="day-select" value="Sunday"> Sun</label>
+                        </div>
+                        <small id="dayHint" style="color:#8b6f30;">Select days matching your batch.</small>
+                    </div>
+
+                    <!-- Jersey -->
+                    <div class="jersey-option">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <strong>👕 Jersey Fee (Mandatory for ALL)</strong>
+                            <span class="badge">₹1000</span>
+                        </div>
+                        <label style="margin-top:0.6rem; display:flex; align-items:center; gap:0.5rem;">
+                            <input type="checkbox" id="additionalJersey" onchange="updateFeeSummary()"> 
+                            Add extra pair (+₹1000) – Collect from coaches
+                        </label>
+                    </div>
+
+                    <!-- Fee Summary -->
+                    <div class="fee-box">
+                        <div style="display:flex; justify-content:space-between;">
+                            <span>📊 TOTAL FEE:</span>
+                            <strong id="grandTotal" style="font-size:1.5rem; color:#8b0000;">₹0</strong>
+                        </div>
+                        <div class="fee-breakdown">
+                            <span>🎓 Coaching: <span id="coachingFee">₹0</span></span>
+                            <span>👕 Jersey: <span id="jerseyFee">₹1000</span></span>
+                            <span>📋 Reg: <span id="regFee">₹500</span></span>
+                        </div>
+                        <div id="discountNote" style="font-size:0.8rem; color:#1e4a2d; margin-top:0.3rem;"></div>
+                    </div>
+
+                    <!-- Payment -->
+                    <span class="section-title">💳 PAYMENT DETAILS</span>
+                    <div class="row-double">
+                        <div class="input-group">
+                            <label>Payment Mode <span class="required-star">*</span></label>
+                            <select id="paymentMode" required>
+                                <option value="">-- Select --</option>
+                                <option value="UPI">UPI</option>
+                                <option value="Cash">Cash</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Paid Date <span class="required-star">*</span></label>
+                            <input type="date" id="paidDate" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>🧾 Attach Receipt</label>
+                        <input type="file" id="receipt" accept="image/*,.pdf">
+                    </div>
+
+                    <!-- Coaching Info -->
+                    <span class="section-title">🏏 COACHING INFO</span>
+                    <div class="row-double">
+                        <div class="input-group">
+                            <label>Experience Level</label>
+                            <select id="experience">
+                                <option value="">-- Select --</option>
+                                <option value="beginner">Beginner</option>
+                                <option value="school">School Level</option>
+                                <option value="club">Club/Academy</option>
+                                <option value="district">District/State</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Batting/Bowling Style</label>
+                            <input type="text" id="playingStyle" placeholder="e.g., RHB, Off-spin">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>🩺 Medical Conditions</label>
+                        <input type="text" id="medical" placeholder="If any, or type 'None'">
+                    </div>
+
+                    <!-- Notes -->
+                    <div class="note-box">
+                        <strong>📌 TERMS & CONDITIONS:</strong>
+                        <ul>
+                            <li>❌ No compensatory classes for missed sessions.</li>
+                            <li>📅 Students must attend only on selected days.</li>
+                            <li>💰 Fees to be paid in advance (quarterly or full).</li>
+                            <li>🧾 Old students: Registration fee waived if already paid.</li>
+                            <li>👕 Jersey fee ₹1000 mandatory for ALL students.</li>
+                            <li>➕ Extra jersey pair (+₹1000) collected from coaches.</li>
+                            <li>📧 Email confirmation sent after registration.</li>
+                        </ul>
+                        <label style="margin-top:0.8rem; display:flex; align-items:center; gap:0.5rem;">
+                            <input type="checkbox" id="consent" required> 
+                            <strong>I agree to all terms & conditions</strong>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn-submit" id="submitBtn">🏏 SUBMIT REGISTRATION</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ==================== ADMIN LOGO MANAGEMENT ====================
+        let savedLogoData = localStorage.getItem('ynCricketAcademyLogo') || null;
+
+        function toggleAdminPanel() {
+            const panel = document.getElementById('adminLogoPanel');
+            panel.classList.toggle('active');
+        }
+
+        function previewAdminLogo(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const validTypes = ['image/jpeg', 'image/png', 'image/svg+xml', 'image/webp'];
+            if (!validTypes.includes(file.type)) {
+                alert('Please upload JPG, PNG, SVG, or WebP.');
+                return;
+            }
+            if (file.size > 5 * 1024 * 1024) {
+                alert('File size should be less than 5MB.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('adminLogoImg').src = e.target.result;
+                document.getElementById('adminLogoImg').style.display = 'block';
+                document.getElementById('adminLogoPlaceholder').style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function saveLogoToCode() {
+            const adminImg = document.getElementById('adminLogoImg');
+            if (!adminImg.src || adminImg.style.display === 'none') {
+                alert('Please upload a logo first.');
+                return;
+            }
+            
+            // Save to localStorage
+            const logoData = adminImg.src;
+            localStorage.setItem('ynCricketAcademyLogo', logoData);
+            savedLogoData = logoData;
+            
+            // Update form logo
+            updateFormLogo(logoData);
+            
+            // Show success message
+            const msg = document.getElementById('logoSavedMsg');
+            msg.classList.add('show');
+            setTimeout(() => msg.classList.remove('show'), 3000);
+            
+            console.log('✅ Logo saved to code! It will persist until reset.');
+        }
+
+        function resetLogoToDefault() {
+            localStorage.removeItem('ynCricketAcademyLogo');
+            savedLogoData = null;
+            
+            // Reset admin preview
+            document.getElementById('adminLogoImg').src = '';
+            document.getElementById('adminLogoImg').style.display = 'none';
+            document.getElementById('adminLogoPlaceholder').style.display = 'block';
+            document.getElementById('adminLogoInput').value = '';
+            
+            // Reset form logo
+            updateFormLogo(null);
+            
+            const msg = document.getElementById('logoSavedMsg');
+            msg.textContent = '🔄 Logo reset to default cricket design.';
+            msg.classList.add('show');
+            setTimeout(() => {
+                msg.textContent = '✅ Logo saved successfully! It will appear on the form.';
+                msg.classList.remove('show');
+            }, 3000);
+        }
+
+        function updateFormLogo(logoData) {
+            const formImg = document.getElementById('formLogoImg');
+            const defaultDesign = document.getElementById('defaultLogoDesign');
+            
+            if (logoData) {
+                formImg.src = logoData;
+                formImg.style.display = 'block';
+                defaultDesign.style.display = 'none';
+            } else {
+                formImg.src = '';
+                formImg.style.display = 'none';
+                defaultDesign.style.display = 'flex';
+            }
+        }
+
+        // Load saved logo on page load
+        function loadSavedLogo() {
+            if (savedLogoData) {
+                updateFormLogo(savedLogoData);
+                // Also update admin preview
+                document.getElementById('adminLogoImg').src = savedLogoData;
+                document.getElementById('adminLogoImg').style.display = 'block';
+                document.getElementById('adminLogoPlaceholder').style.display = 'none';
+            }
+        }
+
+        // ==================== CONFIG ====================
+        const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbxdKwevlVtmwAEhl28E4NLeDlBqQ7DWVcQlIJCucLCr03iujx-xZCrcu6kqFIF__gjUVA/exec';
+
+        // ==================== ID GENERATION ====================
+        function generateStudentId() {
+            return `YN-PSN-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+        }
+
+        let currentStudentId = generateStudentId();
+        document.getElementById('studentId').value = currentStudentId;
+        document.getElementById('studentIdDisplay').textContent = currentStudentId;
+
+        // ==================== FEE STRUCTURE ====================
+        const quarterlyFees = {
+            Q1: { 2: 15000, 3: 16000, 4: 17000, months: 4, label: 'Q1 (Jun–Sep 2026)' },
+            Q2: { 2: 11250, 3: 12000, 4: 12750, months: 3, label: 'Q2 (Oct–Dec 2026)' },
+            Q3: { 2: 11250, 3: 12000, 4: 12750, months: 3, label: 'Q3 (Jan–Mar 2027)' }
+        };
+
+        function getFull10MonthFee(days) {
+            const q1 = quarterlyFees.Q1[days] || 0;
+            const q2 = quarterlyFees.Q2[days] || 0;
+            const q3 = quarterlyFees.Q3[days] || 0;
+            return Math.round((q1 + q2 + q3) * 0.9);
+        }
+
+        // ==================== DAY CHIPS ====================
+        const dayChips = document.querySelectorAll('.day-chip');
+        const dayCheckboxes = document.querySelectorAll('.day-select');
+
+        dayChips.forEach(chip => {
+            chip.addEventListener('click', function(e) {
+                const cb = this.querySelector('input');
+                if (cb.disabled) return;
+                cb.checked = !cb.checked;
+                this.classList.toggle('selected', cb.checked);
+                updateFeeSummary();
+            });
+        });
+
+        function syncDayChips() {
+            dayChips.forEach(chip => {
+                const cb = chip.querySelector('input');
+                chip.classList.toggle('selected', cb.checked);
+                chip.classList.toggle('disabled', cb.disabled);
+            });
+        }
+
+        // ==================== FEE UPDATE ====================
+        function updateFeeSummary() {
+            const planType = document.getElementById('planType').value;
+            const quarter = document.getElementById('quarter').value;
+            const days = document.getElementById('batchDays').value;
+            const oldStudent = document.getElementById('oldStudent').checked;
+            const extraJersey = document.getElementById('additionalJersey').checked;
+            const quarterGroup = document.getElementById('quarterGroup');
+            const dayHint = document.getElementById('dayHint');
+
+            if (planType === 'full10') {
+                quarterGroup.style.display = 'none';
+                document.getElementById('quarter').required = false;
+            } else {
+                quarterGroup.style.display = 'block';
+                if (planType === 'quarterly') document.getElementById('quarter').required = true;
+            }
+
+            if (days === '4') {
+                dayCheckboxes.forEach(cb => { cb.checked = true; cb.disabled = true; });
+                dayHint.textContent = '✅ All 4 days (Thu–Sun) auto-selected.';
+            } else if (days === '2' || days === '3') {
+                dayCheckboxes.forEach(cb => { cb.disabled = false; });
+                dayHint.textContent = `Please select exactly ${days} days.`;
+            } else {
+                dayCheckboxes.forEach(cb => { cb.disabled = false; cb.checked = false; });
+                dayHint.textContent = 'Select days matching your batch.';
+            }
+            syncDayChips();
+
+            let coachingFee = 0;
+            let discountMsg = '';
+            if (planType === 'quarterly' && quarter && days && quarterlyFees[quarter]?.[days]) {
+                coachingFee = quarterlyFees[quarter][days];
+            } else if (planType === 'full10' && days) {
+                coachingFee = getFull10MonthFee(days);
+                const orig = (quarterlyFees.Q1[days]||0)+(quarterlyFees.Q2[days]||0)+(quarterlyFees.Q3[days]||0);
+                discountMsg = `✅ 10% discount! (Original: ₹${orig.toLocaleString('en-IN')})`;
+            }
+
+            const jerseyTotal = extraJersey ? 2000 : 1000;
+            const regFee = oldStudent ? 0 : 500;
+            const grandTotal = coachingFee + jerseyTotal + regFee;
+
+            document.getElementById('coachingFee').textContent = '₹' + coachingFee.toLocaleString('en-IN');
+            document.getElementById('jerseyFee').textContent = '₹' + jerseyTotal;
+            document.getElementById('regFee').textContent = '₹' + regFee;
+            document.getElementById('grandTotal').textContent = '₹' + grandTotal.toLocaleString('en-IN');
+            document.getElementById('discountNote').innerHTML = discountMsg;
+            document.getElementById('regFeeDisplay').textContent = 'Reg: ₹' + regFee;
+        }
+
+        function validateDays() {
+            const days = document.getElementById('batchDays').value;
+            if (!days || days === '4') return true;
+            if (document.querySelectorAll('.day-select:checked').length !== parseInt(days)) {
+                alert(`Please select exactly ${days} day(s).`);
+                return false;
+            }
+            return true;
+        }
+
+        // ==================== SUBMIT ====================
+        async function handleSubmit(event) {
+            event.preventDefault();
+            if (!document.getElementById('consent').checked) { alert('Agree to terms.'); return false; }
+            if (!validateDays()) return false;
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value.trim())) {
+                alert('Valid email required.'); return false;
+            }
+
+            document.getElementById('loadingOverlay').classList.add('active');
+            document.getElementById('submitBtn').disabled = true;
+
+            const planType = document.getElementById('planType').value;
+            const days = document.getElementById('batchDays').value;
+            let coachingFee = 0, planDetail = '';
+            if (planType === 'quarterly') {
+                const q = document.getElementById('quarter').value;
+                coachingFee = quarterlyFees[q]?.[days] || 0;
+                planDetail = quarterlyFees[q]?.label || q;
+            } else {
+                coachingFee = getFull10MonthFee(days);
+                planDetail = 'Full 10 Months (10% off)';
+            }
+
+            const extraJersey = document.getElementById('additionalJersey').checked;
+            const oldStudent = document.getElementById('oldStudent').checked;
+            const jerseyTotal = extraJersey ? 2000 : 1000;
+            const regFee = oldStudent ? 0 : 500;
+            const grandTotal = coachingFee + jerseyTotal + regFee;
+            const mobile = document.getElementById('mobile').value;
+
+            const data = {
+                studentId: currentStudentId, timestamp: new Date().toISOString(),
+                studentName: document.getElementById('studentName').value,
+                parentName: document.getElementById('parentName').value,
+                age: document.getElementById('age').value, dob: document.getElementById('dob').value,
+                mobile, email: document.getElementById('email').value.trim(),
+                address: document.getElementById('address').value,
+                oldStudent, planType, planDetail, batch: days + ' days/week',
+                selectedDays: Array.from(document.querySelectorAll('.day-select:checked')).map(cb => cb.value).join(', '),
+                coachingFee, jerseyFee: jerseyTotal, regFee, totalFee: grandTotal,
+                paymentMode: document.getElementById('paymentMode').value,
+                paidDate: document.getElementById('paidDate').value,
+                receipt: document.getElementById('receipt').files[0]?.name || 'N/A',
+                experience: document.getElementById('experience').value,
+                playingStyle: document.getElementById('playingStyle').value,
+                medical: document.getElementById('medical').value || 'None',
+                logoActive: savedLogoData ? 'Yes' : 'No', consent: true
+            };
+
+            try {
+                await fetch(GOOGLE_SHEET_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+                document.getElementById('loadingOverlay').classList.remove('active');
+                document.getElementById('formContent').style.display = 'none';
+                document.getElementById('successMessage').classList.add('show');
+                document.getElementById('successId').textContent = currentStudentId;
+                if (confirm('✅ Saved! Open WhatsApp?')) window.open(`https://wa.me/91${mobile}?text=🏏 YN Academy - ID: ${currentStudentId} - Total: ₹${grandTotal}`, '_blank');
+            } catch(e) {
+                document.getElementById('loadingOverlay').classList.remove('active');
+                document.getElementById('submitBtn').disabled = false;
+                alert('Error. Try again.');
+            }
+            return false;
+        }
+
+        function resetForm() {
+            document.getElementById('registrationForm').reset();
+            document.getElementById('formContent').style.display = 'flex';
+            document.getElementById('successMessage').classList.remove('show');
+            document.getElementById('submitBtn').disabled = false;
+            currentStudentId = generateStudentId();
+            document.getElementById('studentId').value = currentStudentId;
+            document.getElementById('studentIdDisplay').textContent = currentStudentId;
+            dayCheckboxes.forEach(cb => { cb.checked = false; cb.disabled = false; });
+            syncDayChips(); updateFeeSummary();
+            document.getElementById('paidDate').value = new Date().toISOString().split('T')[0];
+        }
+
+        // ==================== INIT ====================
+        window.onload = function() {
+            document.getElementById('paidDate').value = new Date().toISOString().split('T')[0];
+            document.getElementById('dob').max = new Date().toISOString().split('T')[0];
+            loadSavedLogo();
+            updateFeeSummary();
+        };
+
+        ['planType','quarter','batchDays'].forEach(id => document.getElementById(id).addEventListener('change', updateFeeSummary));
+        document.getElementById('oldStudent').addEventListener('change', updateFeeSummary);
+        document.getElementById('additionalJersey').addEventListener('change', updateFeeSummary);
+    </script>
+</body>
+</html>
