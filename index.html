@@ -2,1137 +2,337 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YN Cricket Academy (PSN) | Registration 2026-27</title>
     <style>
-        :root {
-            --pitch-green: #1b5e20;
-            --deep-green: #0a2f1f;
-            --cricket-red: #c41e3a;
-            --gold: #d4af37;
-            --gold-dark: #b8941f;
-            --cream: #f5f0e1;
-            --white: #ffffff;
-            --leather-brown: #8b5e3c;
-            --text-dark: #1a1a1a;
-            --shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: 
-                linear-gradient(135deg, #0d4f1a 0%, #1a6b2e 25%, #0a3d14 50%, #1b5e20 75%, #0d4f1a 100%);
-            background-size: 400% 400%;
-            animation: pitchMove 20s ease infinite;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            padding: 1.5rem 1rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        @keyframes pitchMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            background: 
-                repeating-linear-gradient(
-                    0deg,
-                    transparent,
-                    transparent 40px,
-                    rgba(255,255,255,0.02) 40px,
-                    rgba(255,255,255,0.02) 41px
-                );
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        body::after {
-            content: "";
-            position: fixed;
-            top: 5%;
-            right: 5%;
-            width: 80px;
-            height: 80px;
-            background: radial-gradient(circle at 35% 35%, #c41e3a 0%, #8b0000 100%);
-            border-radius: 50%;
-            box-shadow: 
-                0 8px 25px rgba(0,0,0,0.4),
-                inset -3px -3px 8px rgba(0,0,0,0.5),
-                inset 3px 3px 8px rgba(255,255,255,0.2);
-            z-index: 0;
-            opacity: 0.25;
-            animation: ballFloat 6s ease-in-out infinite;
-        }
-
-        @keyframes ballFloat {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-        }
-
-        .main-container {
-            max-width: 900px;
-            width: 100%;
-            position: relative;
-            z-index: 2;
-        }
-
-        .admin-logo-panel {
-            background: rgba(0,0,0,0.85);
-            border: 2px solid var(--gold);
-            border-radius: 1.5rem;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            backdrop-filter: blur(10px);
-            display: none;
-        }
-        .admin-logo-panel.active {
-            display: block;
-        }
-        .admin-logo-panel h3 {
-            color: var(--gold);
-            text-align: center;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-            letter-spacing: 1px;
-        }
-        .logo-upload-area {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-        }
-        .logo-preview-box {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 4px solid var(--gold);
-            background: #0a2f1f;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .logo-preview-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .logo-preview-placeholder {
-            font-size: 3rem;
-            color: var(--gold);
-        }
-        .logo-upload-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .btn-upload {
-            background: var(--gold);
-            color: #0a2f1f;
-            border: none;
-            padding: 0.6rem 1.5rem;
-            border-radius: 2rem;
-            font-weight: 700;
-            cursor: pointer;
-            border: 2px solid #0a2f1f;
-            transition: 0.2s;
-            font-size: 0.9rem;
-        }
-        .btn-upload:hover {
-            background: #e5b73c;
-        }
-        .btn-save-logo {
-            background: #2e7d32;
-            color: white;
-            border: none;
-            padding: 0.6rem 1.5rem;
-            border-radius: 2rem;
-            font-weight: 700;
-            cursor: pointer;
-            border: 2px solid var(--gold);
-        }
-        .btn-reset-logo {
-            background: #c41e3a;
-            color: white;
-            border: none;
-            padding: 0.6rem 1.5rem;
-            border-radius: 2rem;
-            font-weight: 700;
-            cursor: pointer;
-            border: 2px solid var(--gold);
-        }
-        .logo-saved-msg {
-            color: #4caf50;
-            font-weight: 700;
-            font-size: 0.85rem;
-            display: none;
-        }
-        .logo-saved-msg.show {
-            display: block;
-        }
-        .admin-logout-btn {
-            background: transparent;
-            border: 1px solid #e57373;
-            color: #e57373;
-            padding: 0.3rem 1rem;
-            border-radius: 2rem;
-            cursor: pointer;
-            font-size: 0.75rem;
-            margin-top: 0.5rem;
-        }
-
-        .header-bar {
-            background: linear-gradient(180deg, #1a4d2e 0%, #0a2f1f 100%);
-            border-radius: 2rem 2rem 0 0;
-            padding: 1.2rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            border: 2px solid var(--gold);
-            border-bottom: 3px solid var(--cricket-red);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .id-display {
-            background: #000;
-            color: #00ff41;
-            font-family: 'Courier New', monospace;
-            padding: 0.6rem 1.5rem;
-            border-radius: 2rem;
-            font-weight: 700;
-            font-size: 1rem;
-            letter-spacing: 1px;
-            border: 2px solid var(--gold);
-            text-shadow: 0 0 10px #00ff41;
-            box-shadow: 0 0 20px rgba(0,255,65,0.2);
-        }
-
-        .form-container {
-            background: linear-gradient(180deg, #faf6ed 0%, #f5edd6 100%);
-            border-radius: 0 0 3rem 3rem;
-            box-shadow: var(--shadow), 0 0 0 3px var(--gold);
-            padding: 2rem 2.2rem;
-            border: 2px solid var(--gold);
-            border-top: 2px dashed var(--gold);
-            position: relative;
-        }
-
-        .cricket-logo-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            gap: 0.5rem;
-        }
-
-        .cricket-logo-container {
-            position: relative;
-            width: 130px;
-            height: 130px;
-        }
-
-        .cricket-logo {
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            background: linear-gradient(180deg, #1a5c2a 0%, #0a2f1f 100%);
-            border: 4px solid var(--gold);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 
-                0 10px 30px rgba(0,0,0,0.5),
-                0 0 0 8px rgba(212,175,55,0.15);
-            position: relative;
-            overflow: hidden;
-            transition: 0.3s;
-        }
-
-        .cricket-logo-design {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-            position: relative;
-        }
-
-        .logo-stumps {
-            display: flex;
-            gap: 5px;
-            align-items: flex-end;
-            position: relative;
-        }
-
-        .stump {
-            width: 6px;
-            height: 35px;
-            background: linear-gradient(180deg, #f5deb3 0%, #deb887 100%);
-            border-radius: 3px 3px 0 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .bail {
-            width: 28px;
-            height: 4px;
-            background: #f5deb3;
-            border-radius: 2px;
-            position: absolute;
-            top: 8px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.3);
-        }
-
-        .cricket-bat {
-            width: 8px;
-            height: 45px;
-            background: linear-gradient(180deg, #d4a574 0%, #c4956a 50%, #8b5e3c 100%);
-            border-radius: 4px 4px 2px 2px;
-            position: absolute;
-            right: -18px;
-            bottom: 5px;
-            transform: rotate(-15deg);
-            box-shadow: 0 3px 6px rgba(0,0,0,0.4);
-        }
-
-        .cricket-ball-logo {
-            width: 14px;
-            height: 14px;
-            background: radial-gradient(circle at 35% 35%, #c41e3a, #8b0000);
-            border-radius: 50%;
-            position: absolute;
-            left: -20px;
-            top: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-            animation: ballBounce 2s ease-in-out infinite;
-        }
-
-        @keyframes ballBounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
-        }
-
-        .logo-text-yn {
-            color: var(--gold);
-            font-weight: 900;
-            font-size: 1.1rem;
-            letter-spacing: 3px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-            margin-top: 2px;
-        }
-
-        h2 {
-            text-align: center;
-            color: #1a3d1a;
-            margin: 0.5rem 0 1.5rem;
-            font-weight: 800;
-            font-size: 1.5rem;
-            border-bottom: 3px dashed #c41e3a;
-            padding-bottom: 0.5rem;
-            letter-spacing: 1px;
-        }
-
-        .form-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 1.2rem;
-        }
-
-        .section-title {
-            font-weight: 700;
-            color: white;
-            font-size: 0.9rem;
-            background: var(--cricket-red);
-            padding: 0.5rem 1.2rem;
-            border-radius: 2rem;
-            display: inline-block;
-            margin-top: 0.3rem;
-            letter-spacing: 0.5px;
-            box-shadow: 0 3px 8px rgba(196,30,58,0.3);
-        }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-        }
-        label {
-            font-weight: 600;
-            color: #2d4a22;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-        .required-star {
-            color: var(--cricket-red);
-            font-weight: bold;
-        }
-        input, select, textarea {
-            padding: 0.8rem 1.2rem;
-            border: 2px solid #c9a94b;
-            border-radius: 1.5rem;
-            font-size: 0.95rem;
-            background: #fffef7;
-            transition: 0.2s;
-            outline: none;
-            font-family: inherit;
-        }
-        input:focus, select:focus, textarea:focus {
-            border-color: var(--cricket-red);
-            box-shadow: 0 0 0 4px rgba(196,30,58,0.15);
-        }
-        .row-double {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-        .row-triple {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .fee-box {
-            background: linear-gradient(135deg, #fff8e7, #fef3d0);
-            border-radius: 1.5rem;
-            padding: 1.2rem;
-            border-left: 6px solid var(--cricket-red);
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-        .fee-breakdown {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-        }
-
-        .batch-days {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-            margin-top: 0.2rem;
-        }
-        .day-chip {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            background: #fffbec;
-            padding: 0.5rem 1rem;
-            border-radius: 2rem;
-            border: 1px solid #c9a94b;
-            cursor: pointer;
-            transition: 0.2s;
-            font-weight: 500;
-            user-select: none;
-        }
-        .day-chip.selected {
-            background: var(--cricket-red);
-            color: white;
-            font-weight: 700;
-            border-color: #8b0000;
-        }
-        .day-chip.disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            background: #e0d5b0;
-        }
-        .day-chip input {
-            display: none;
-        }
-
-        .jersey-option {
-            background: #f0f7e6;
-            border-radius: 1.2rem;
-            padding: 1rem;
-            border: 1px solid #c9a94b;
-        }
-
-        .note-box {
-            background: #fcf5e3;
-            border-radius: 1.2rem;
-            padding: 1.2rem;
-            border: 1px solid #deb887;
-            font-size: 0.85rem;
-            color: #3b3b1f;
-        }
-        .note-box ul {
-            margin-top: 0.4rem;
-            padding-left: 1.3rem;
-        }
-
-        .btn-submit {
-            background: linear-gradient(180deg, #c41e3a, #8b0000);
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 3rem;
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: white;
-            box-shadow: 0 10px 25px rgba(196,30,58,0.4);
-            cursor: pointer;
-            letter-spacing: 1px;
-            border: 2px solid var(--gold);
-            transition: 0.2s;
-            width: 100%;
-            text-transform: uppercase;
-        }
-        .btn-submit:hover {
-            filter: brightness(1.15);
-            transform: translateY(-2px);
-        }
-        .btn-submit:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .badge {
-            background: var(--cricket-red);
-            color: white;
-            padding: 0.2rem 0.8rem;
-            border-radius: 1rem;
-            font-size: 0.75rem;
-            font-weight: 700;
-        }
-
-        .success-message {
-            display: none;
-            background: #e8f5e9;
-            border: 2px solid #2e7d32;
-            border-radius: 1.5rem;
-            padding: 1.5rem;
-            text-align: center;
-            margin-top: 1rem;
-        }
-        .success-message.show {
-            display: block;
-        }
-
-        .loading-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.75);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-        .loading-overlay.active {
-            display: flex;
-        }
-        .spinner {
-            width: 60px;
-            height: 60px;
-            border: 6px solid var(--gold);
-            border-top: 6px solid var(--cricket-red);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .admin-hint {
-            text-align: center;
-            font-size: 0.6rem;
-            color: #ccc;
-            margin-top: 0.3rem;
-            opacity: 0.3;
-        }
-
-        @media (max-width: 650px) {
-            .row-double, .row-triple {
-                grid-template-columns: 1fr;
-            }
-            .header-bar {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
+        :root{--red:#c41e3a;--gold:#d4af37}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:linear-gradient(135deg,#0d4f1a,#1a6b2e,#0a3d14,#1b5e20);background-size:400% 400%;animation:bg 20s ease infinite;font-family:'Segoe UI',system-ui,sans-serif;padding:1.5rem 1rem;display:flex;flex-direction:column;align-items:center;min-height:100vh}
+        @keyframes bg{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
+        .main{max-width:850px;width:100%}
+        .header{background:linear-gradient(180deg,#1a4d2e,#0a2f1f);border-radius:2rem 2rem 0 0;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;border:2px solid var(--gold);border-bottom:3px solid var(--red)}
+        .hlogo{width:45px;height:45px;border-radius:50%;border:2px solid var(--gold);object-fit:cover;display:none}
+        .hlogo.show{display:block}
+        .htitle{color:#ffd966;font-weight:800;font-size:1rem}
+        .idbox{background:#000;color:#00ff41;font-family:'Courier New',monospace;padding:.5rem 1.2rem;border-radius:2rem;font-weight:700;font-size:.9rem;border:2px solid var(--gold);text-shadow:0 0 10px #00ff41}
+        .formbox{background:linear-gradient(180deg,#faf6ed,#f5edd6);border-radius:0 0 3rem 3rem;box-shadow:0 25px 50px rgba(0,0,0,0.5),0 0 0 3px var(--gold);padding:2rem;border:2px solid var(--gold);border-top:2px dashed var(--gold)}
+        .flogo{text-align:center;margin-bottom:1rem}
+        .flogo img{width:100px;height:100px;border-radius:50%;border:3px solid var(--gold);object-fit:cover;box-shadow:0 5px 15px rgba(0,0,0,0.3);display:none}
+        .flogo img.show{display:inline-block}
+        h2{text-align:center;color:#1a3d1a;margin:1rem 0;font-weight:800;font-size:1.4rem;border-bottom:3px dashed #c41e3a;padding-bottom:.5rem}
+        .grid{display:flex;flex-direction:column;gap:1rem}
+        .sec{font-weight:700;color:#fff;background:var(--red);padding:.4rem 1rem;border-radius:2rem;display:inline-block;font-size:.85rem}
+        .inp{display:flex;flex-direction:column;gap:.2rem}
+        .inp label{font-weight:600;color:#2d4a22;font-size:.8rem}
+        .req{color:#c41e3a}
+        input,select,textarea{padding:.7rem 1rem;border:2px solid #c9a94b;border-radius:1.5rem;font-size:.9rem;background:#fffef7;outline:0;font-family:inherit}
+        input:focus,select:focus,textarea:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(196,30,58,.15)}
+        .r2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+        .r3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+        .days{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.2rem}
+        .day{background:#fffbec;padding:.4rem .8rem;border-radius:2rem;border:1px solid #c9a94b;cursor:pointer;font-weight:500;font-size:.85rem;user-select:none}
+        .day.sel{background:var(--red);color:#fff;border-color:#8b0000}
+        .day.dis{opacity:.6;cursor:not-allowed}
+        .day input{display:none}
+        .fee{background:linear-gradient(135deg,#fff8e7,#fef3d0);border-radius:1.2rem;padding:1rem;border-left:5px solid var(--red);font-weight:600}
+        .frow{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;font-size:.85rem;margin-top:.3rem}
+        .btn{background:linear-gradient(180deg,#c41e3a,#8b0000);border:0;padding:.9rem;border-radius:3rem;font-weight:700;font-size:1.1rem;color:#fff;cursor:pointer;border:2px solid var(--gold);width:100%;text-transform:uppercase}
+        .btn:hover{filter:brightness(1.1)}
+        .btn:disabled{opacity:.5;cursor:not-allowed}
+        .ok{display:none;background:#e8f5e9;border:2px solid #2e7d32;border-radius:1.5rem;padding:1.5rem;text-align:center}
+        .ok.show{display:block}
+        .load{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:999;justify-content:center;align-items:center;flex-direction:column}
+        .load.on{display:flex}
+        .spin{width:50px;height:50px;border:5px solid #d4af37;border-top-color:#c41e3a;border-radius:50%;animation:spin 1s linear infinite}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .upbox{border:2px dashed #d4af37;border-radius:1.5rem;padding:1.5rem;text-align:center;background:#fffef7;cursor:pointer}
+        .upbox:hover{border-color:#25D366}
+        .prev{display:none}
+        .prev img{max-width:100%;max-height:250px;border-radius:1rem;border:2px solid #25D366}
+        .upi{background:#f0f7e6;border-radius:1rem;padding:1rem;text-align:center;border:2px dashed #d4af37}
+        .note{background:#fcf5e3;border-radius:1rem;padding:1rem;border:1px solid #deb887;font-size:.8rem;line-height:1.5}
+        .note ul{margin-top:.3rem;padding-left:1.2rem}
+        .jm{background:#fff3cd;border:1px solid #ffc107;border-radius:.5rem;padding:.5rem;margin-top:.3rem;font-size:.8rem;color:#856404;font-weight:600}
+        .jo{background:#e8f5e9;border:1px solid #4caf50;border-radius:.5rem;padding:.5rem;margin-top:.3rem;font-size:.8rem;color:#2e7d32;font-weight:600}
+        .scanner-display{text-align:center;margin-top:.5rem}
+        .scanner-display img{max-width:200px;border-radius:1rem;border:2px solid #d4af37}
+        @media(max-width:600px){.r2,.r3{grid-template-columns:1fr}}
     </style>
 </head>
 <body>
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="spinner"></div>
-        <p style="color:#ffd966; margin-top:1rem; font-weight:700;">Submitting Registration...</p>
+<div class="load" id="loading"><div class="spin"></div><p style="color:#ffd966;margin-top:1rem;font-weight:700">Processing...</p></div>
+
+<div class="main">
+    <div class="header">
+        <div style="display:flex;align-items:center;gap:.8rem">
+            <img class="hlogo" id="hlogo" src=""><span class="htitle">🏏 YN CRICKET ACADEMY (PSN)</span>
+        </div>
+        <div class="idbox" id="idDisplay">YN-PSN-202627-0005</div>
     </div>
 
-    <div class="main-container">
-        <!-- Admin Panel - Hidden -->
-        <div class="admin-logo-panel" id="adminLogoPanel">
-            <h3>🏏 ADMIN: Upload Academy Logo</h3>
-            <div class="logo-upload-area">
-                <div class="logo-preview-box" id="adminLogoPreview">
-                    <span class="logo-preview-placeholder" id="adminLogoPlaceholder">🏏</span>
-                    <img id="adminLogoImg" src="" alt="Logo" style="display:none;">
-                </div>
-                <div class="logo-upload-buttons">
-                    <button class="btn-upload" onclick="document.getElementById('adminLogoInput').click()">📁 Choose Logo</button>
-                    <button class="btn-save-logo" onclick="saveLogoToCode()">💾 Save Logo</button>
-                    <button class="btn-reset-logo" onclick="resetLogoToDefault()">🔄 Reset</button>
-                </div>
-                <input type="file" id="adminLogoInput" accept="image/*" style="display:none;" onchange="previewAdminLogo(event)">
-                <p class="logo-saved-msg" id="logoSavedMsg">✅ Logo saved!</p>
-                <small style="color:#ccc; font-size:0.75rem;">PNG, JPG, SVG (Max 5MB)</small>
-                <button class="admin-logout-btn" onclick="closeAdminPanel()">🔒 Close Admin Panel</button>
-            </div>
+    <div class="formbox">
+        <div class="flogo"><img id="flogo" src=""></div>
+        <h2>📋 REGISTRATION FORM 2026-27</h2>
+
+        <div class="ok" id="okMsg">
+            <h3 style="color:#2e7d32">✅ REGISTRATION SUCCESSFUL!</h3>
+            <p>Student ID: <strong id="okId" style="color:#c41e3a;font-size:1.2rem"></strong></p>
+            <p>📧 Confirmation email sent</p>
+            <p id="okContact" style="font-size:.85rem;color:#666"></p>
+            <button onclick="resetForm()" style="margin-top:1rem;padding:.5rem 2rem;border-radius:2rem;background:#c41e3a;color:#fff;border:0;cursor:pointer;font-weight:700">Register Another</button>
         </div>
 
-        <div class="header-bar">
-            <div style="color:#ffd966; font-weight:800; font-size:1rem; letter-spacing:1px;">
-                🏏 YN CRICKET ACADEMY (PSN)
-            </div>
-            <div class="id-display" id="studentIdDisplay">
-                YN-PSN-202627-0005
-            </div>
-        </div>
+        <form id="form" onsubmit="return submitForm(event)" novalidate>
+        <div class="grid" id="formContent">
+            <div class="inp"><label>🆔 Student ID</label><input type="text" id="sid" readonly style="background:#e8f5e9;font-weight:700;font-family:'Courier New',monospace"></div>
 
-        <div class="form-container">
-            <div class="cricket-logo-section">
-                <div class="cricket-logo-container">
-                    <div class="cricket-logo" id="formCricketLogo">
-                        <div class="cricket-logo-design" id="defaultLogoDesign">
-                            <div class="logo-stumps" style="position:relative;">
-                                <div class="bail"></div>
-                                <div class="stump"></div>
-                                <div class="stump"></div>
-                                <div class="stump"></div>
-                            </div>
-                            <div class="cricket-bat"></div>
-                            <div class="cricket-ball-logo"></div>
-                            <span class="logo-text-yn">YN</span>
-                        </div>
-                        <img id="formLogoImg" src="" alt="Logo" style="display:none; width:100%; height:100%; object-fit:cover; border-radius:50%; position:absolute; top:0; left:0;">
-                    </div>
+            <span class="sec">👤 PERSONAL DETAILS</span>
+            <div class="r2">
+                <div class="inp"><label>Student Name <span class="req">*</span></label><input type="text" id="sname" required></div>
+                <div class="inp"><label>Parent/Guardian <span class="req">*</span></label><input type="text" id="pname" required></div>
+            </div>
+            <div class="r3">
+                <div class="inp"><label>Age <span class="req">*</span></label><input type="number" id="age" min="5" max="25" required></div>
+                <div class="inp"><label>DOB <span class="req">*</span></label><input type="date" id="dob" required></div>
+                <div class="inp"><label>Mobile <span class="req">*</span></label><input type="tel" id="mobile" pattern="[0-9]{10}" required></div>
+            </div>
+            <div class="inp"><label>Email <span class="req">*</span></label><input type="email" id="email" required></div>
+            <div class="inp"><label>Address <span class="req">*</span></label><textarea id="address" rows="2" required></textarea></div>
+
+            <div style="display:flex;align-items:center;gap:1rem;background:#e6f0da;padding:.5rem 1rem;border-radius:2rem">
+                <label style="margin:0;display:flex;align-items:center;gap:.5rem"><input type="checkbox" id="oldStudent" onchange="updateFees()"> ⭐ Old Student</label>
+                <span id="regDisp" style="font-weight:700;margin-left:auto">Reg: ₹500</span>
+            </div>
+
+            <span class="sec">📅 QUARTER & DATES</span>
+            <div class="r2">
+                <div class="inp"><label>Quarter <span class="req">*</span></label>
+                    <select id="quarter" required onchange="updateFees()">
+                        <option value="">-- Choose --</option>
+                        <option value="Q1">Q1: Jun-Sep 2026</option>
+                        <option value="Q2">Q2: Oct-Dec 2026</option>
+                        <option value="Q3">Q3: Jan-Mar 2027</option>
+                        <option value="full">Full Season 🔥10% OFF</option>
+                    </select>
                 </div>
-                <small style="color:#666; font-size:0.7rem;">YN Cricket Academy (PSN)</small>
+                <div class="inp"><label>Start Date <span class="req">*</span></label><input type="date" id="startDate" required onchange="updateFees()"></div>
+            </div>
+            <div class="inp"><label>End Date</label><input type="text" id="endDate" readonly style="background:#f5f5f5;font-weight:600;color:#c41e3a"></div>
+
+            <div class="inp"><label>Batch <span class="req">*</span></label>
+                <select id="batchDays" required onchange="updateFees()">
+                    <option value="">-- Select --</option><option value="2">2 Days</option><option value="3">3 Days</option><option value="4">4 Days</option>
+                </select>
             </div>
 
-            <h2>📋 REGISTRATION FORM 2026-27</h2>
-
-            <div class="success-message" id="successMessage">
-                <h3 style="color:#2e7d32;">✅ REGISTRATION SUCCESSFUL!</h3>
-                <p>Student ID: <strong id="successId" style="font-size:1.3rem;"></strong></p>
-                <p style="margin-top:0.5rem;">📧 Confirmation sent to your email</p>
-                <p>📱 WhatsApp confirmation ready</p>
-                <button onclick="resetForm()" style="margin-top:1rem; padding:0.5rem 1.5rem; border-radius:2rem; background:#c41e3a; color:white; border:none; cursor:pointer; font-weight:700;">Register Another Student</button>
-            </div>
-
-            <form id="registrationForm" onsubmit="return handleSubmit(event)" novalidate>
-                <div class="form-grid" id="formContent">
-                    <div class="input-group">
-                        <label>🆔 Student ID (Auto-Generated)</label>
-                        <input type="text" id="studentId" readonly style="background:#e8f5e9; font-weight:700; letter-spacing:1px; font-family:'Courier New',monospace;">
-                    </div>
-
-                    <span class="section-title">👤 PERSONAL DETAILS</span>
-                    <div class="row-double">
-                        <div class="input-group">
-                            <label>Student Full Name <span class="required-star">*</span></label>
-                            <input type="text" id="studentName" placeholder="Enter full name" required>
-                        </div>
-                        <div class="input-group">
-                            <label>Parent / Guardian Name <span class="required-star">*</span></label>
-                            <input type="text" id="parentName" placeholder="Father/Mother/Guardian" required>
-                        </div>
-                    </div>
-                    <div class="row-triple">
-                        <div class="input-group">
-                            <label>🎂 Age <span class="required-star">*</span></label>
-                            <input type="number" id="age" min="5" max="25" placeholder="Years" required>
-                        </div>
-                        <div class="input-group">
-                            <label>📅 Date of Birth <span class="required-star">*</span></label>
-                            <input type="date" id="dob" required>
-                        </div>
-                        <div class="input-group">
-                            <label>📱 WhatsApp/Mobile <span class="required-star">*</span></label>
-                            <input type="tel" id="mobile" placeholder="10-digit number" pattern="[0-9]{10}" required>
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <label>📧 Email ID <span class="required-star">*</span></label>
-                        <input type="email" id="email" placeholder="example@email.com" required>
-                        <small style="color:#666; font-size:0.75rem;">Confirmation sent to this email</small>
-                    </div>
-                    <div class="input-group">
-                        <label>📍 Address <span class="required-star">*</span></label>
-                        <textarea id="address" rows="2" placeholder="Full address" required></textarea>
-                    </div>
-
-                    <div style="display:flex; align-items:center; gap:1rem; background:#e6f0da; padding:0.6rem 1.2rem; border-radius:2rem; flex-wrap:wrap;">
-                        <label style="margin:0; gap:0.5rem;">
-                            <input type="checkbox" id="oldStudent" onchange="updateFeeSummary()"> 
-                            <span style="font-weight:700;">⭐ Old Student (Reg. fee already paid)</span>
-                        </label>
-                        <span id="regFeeDisplay" style="font-weight:bold; margin-left:auto;">Reg: ₹500</span>
-                    </div>
-
-                    <span class="section-title">💰 FEES & PLAN</span>
-                    <div class="row-double">
-                        <div class="input-group">
-                            <label>📆 Plan Type <span class="required-star">*</span></label>
-                            <select id="planType" required onchange="updateFeeSummary()">
-                                <option value="">-- Select Plan --</option>
-                                <option value="quarterly">Quarterly (Q1/Q2/Q3)</option>
-                                <option value="full10">Full 10 Months (Jun–Mar) 🔥 10% OFF</option>
-                            </select>
-                        </div>
-                        <div class="input-group" id="quarterGroup">
-                            <label>📅 Quarter</label>
-                            <select id="quarter" onchange="updateFeeSummary()">
-                                <option value="">-- Choose --</option>
-                                <option value="Q1">Q1 (Jun–Sep 2026) 4m</option>
-                                <option value="Q2">Q2 (Oct–Dec 2026) 3m</option>
-                                <option value="Q3">Q3 (Jan–Mar 2027) 3m</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <label>⚡ Batch (Days/Week) <span class="required-star">*</span></label>
-                        <select id="batchDays" required onchange="updateFeeSummary()">
-                            <option value="">-- Select --</option>
-                            <option value="2">2 Days / week</option>
-                            <option value="3">3 Days / week</option>
-                            <option value="4">4 Days / week</option>
-                        </select>
-                    </div>
-
-                    <div class="input-group">
-                        <label>🗓️ Coaching Days (Thu–Sun) <span class="required-star">*</span></label>
-                        <div class="batch-days" id="dayChips">
-                            <label class="day-chip" data-day="Thursday"><input type="checkbox" class="day-select" value="Thursday"> Thu</label>
-                            <label class="day-chip" data-day="Friday"><input type="checkbox" class="day-select" value="Friday"> Fri</label>
-                            <label class="day-chip" data-day="Saturday"><input type="checkbox" class="day-select" value="Saturday"> Sat</label>
-                            <label class="day-chip" data-day="Sunday"><input type="checkbox" class="day-select" value="Sunday"> Sun</label>
-                        </div>
-                        <small id="dayHint" style="color:#8b6f30;">Select days matching your batch.</small>
-                    </div>
-
-                    <div class="jersey-option">
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <strong>👕 Jersey Fee (Mandatory for ALL)</strong>
-                            <span class="badge">₹1000</span>
-                        </div>
-                        <label style="margin-top:0.6rem; display:flex; align-items:center; gap:0.5rem;">
-                            <input type="checkbox" id="additionalJersey" onchange="updateFeeSummary()"> 
-                            Add extra pair (+₹1000) – Collect from coaches
-                        </label>
-                    </div>
-
-                    <div class="fee-box">
-                        <div style="display:flex; justify-content:space-between;">
-                            <span>📊 TOTAL FEE:</span>
-                            <strong id="grandTotal" style="font-size:1.5rem; color:#8b0000;">₹0</strong>
-                        </div>
-                        <div class="fee-breakdown">
-                            <span>🎓 Coaching: <span id="coachingFee">₹0</span></span>
-                            <span>👕 Jersey: <span id="jerseyFee">₹1000</span></span>
-                            <span>📋 Reg: <span id="regFee">₹500</span></span>
-                        </div>
-                        <div id="discountNote" style="font-size:0.8rem; color:#1e4a2d; margin-top:0.3rem;"></div>
-                    </div>
-
-                    <span class="section-title">💳 PAYMENT DETAILS</span>
-                    <div class="row-double">
-                        <div class="input-group">
-                            <label>Payment Mode <span class="required-star">*</span></label>
-                            <select id="paymentMode" required>
-                                <option value="">-- Select --</option>
-                                <option value="UPI">UPI</option>
-                                <option value="Cash">Cash</option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <label>Paid Date <span class="required-star">*</span></label>
-                            <input type="date" id="paidDate" required>
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <label>🧾 Attach Receipt</label>
-                        <input type="file" id="receipt" accept="image/*,.pdf">
-                    </div>
-
-                    <span class="section-title">🏏 COACHING INFO</span>
-                    <div class="row-double">
-                        <div class="input-group">
-                            <label>Experience Level</label>
-                            <select id="experience">
-                                <option value="">-- Select --</option>
-                                <option value="beginner">Beginner</option>
-                                <option value="school">School Level</option>
-                                <option value="club">Club/Academy</option>
-                                <option value="district">District/State</option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <label>Batting/Bowling Style</label>
-                            <input type="text" id="playingStyle" placeholder="e.g., RHB, Off-spin">
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <label>🩺 Medical Conditions</label>
-                        <input type="text" id="medical" placeholder="If any, or type 'None'">
-                    </div>
-
-                    <div class="note-box">
-                        <strong>📌 TERMS & CONDITIONS:</strong>
-                        <ul>
-                            <li>❌ No compensatory classes for missed sessions.</li>
-                            <li>📅 Students must attend only on selected days.</li>
-                            <li>💰 Fees to be paid in advance (quarterly or full).</li>
-                            <li>🧾 Old students: Registration fee waived if already paid.</li>
-                            <li>👕 Jersey fee ₹1000 mandatory for ALL students.</li>
-                            <li>➕ Extra jersey pair (+₹1000) collected from coaches.</li>
-                            <li>📧 Email confirmation sent after registration.</li>
-                        </ul>
-                        <label style="margin-top:0.8rem; display:flex; align-items:center; gap:0.5rem;">
-                            <input type="checkbox" id="consent" required> 
-                            <strong>I agree to all terms & conditions</strong>
-                        </label>
-                    </div>
-
-                    <button type="submit" class="btn-submit" id="submitBtn">🏏 SUBMIT REGISTRATION</button>
+            <div class="inp"><label>Coaching Days (Thu-Sun) <span class="req">*</span></label>
+                <div class="days" id="dayChips">
+                    <label class="day"><input type="checkbox" class="dsel" value="Thursday"> Thu</label>
+                    <label class="day"><input type="checkbox" class="dsel" value="Friday"> Fri</label>
+                    <label class="day"><input type="checkbox" class="dsel" value="Saturday"> Sat</label>
+                    <label class="day"><input type="checkbox" class="dsel" value="Sunday"> Sun</label>
                 </div>
-            </form>
+                <small id="dayHint" style="color:#8b6f30"></small>
+            </div>
+
+            <!-- JERSEY SECTION -->
+            <div style="background:#f0f7e6;border-radius:1rem;padding:.8rem">
+                <strong>👕 Jersey Fee</strong>
+                <p style="font-size:.8rem;margin:.3rem 0">All students must wear academy jersey</p>
+                <div id="jerseyNew"><div class="jm">✅ Jersey: ₹1000 (Mandatory)</div></div>
+                <div id="jerseyOld" style="display:none">
+                    <label style="display:flex;align-items:center;gap:.5rem;margin-top:.3rem"><input type="checkbox" id="needJersey" onchange="updateFees()"> I need Jersey - ₹1000</label>
+                    <div class="jo">✅ Old students: Jersey optional if you already have one</div>
+                </div>
+                <label style="display:flex;align-items:center;gap:.5rem;margin-top:.3rem"><input type="checkbox" id="extraJersey" onchange="updateFees()"> Extra pair +₹1000</label>
+            </div>
+
+            <div class="fee">
+                <div style="display:flex;justify-content:space-between"><span>TOTAL:</span><strong id="grandTotal" style="font-size:1.3rem;color:#8b0000">₹0</strong></div>
+                <div class="frow"><span>Coaching: <span id="coachingFee">₹0</span></span><span>Jersey: <span id="jerseyFee">₹0</span></span><span>Reg: <span id="regFee">₹500</span></span></div>
+                <div id="discountNote" style="font-size:.8rem;color:#1e4a2d"></div>
+            </div>
+
+            <span class="sec">💳 PAYMENT</span>
+            <div class="upi">
+                <strong>📱 Pay via UPI</strong>
+                <p style="font-size:.85rem;margin:.3rem 0">UPI ID: <strong style="color:#c41e3a" id="upiDisplay">9606743437@upi</strong></p>
+                <div class="scanner-display" id="scannerDisplayArea"></div>
+                <p style="font-size:.75rem;color:#c41e3a">⚠️ Upload screenshot below</p>
+            </div>
+
+            <div class="r2">
+                <div class="inp"><label>Mode <span class="req">*</span></label><select id="paymentMode" required><option value="">-- Select --</option><option value="UPI">UPI</option><option value="Cash">Cash</option></select></div>
+                <div class="inp"><label>Paid Date <span class="req">*</span></label><input type="date" id="paidDate" required></div>
+            </div>
+
+            <div class="inp"><label>🧾 Payment Screenshot <span class="req">*</span></label>
+                <div class="upbox" id="uploadArea" onclick="document.getElementById('receipt').click()">
+                    <div id="uploadPH"><span style="font-size:3rem">📷</span><p style="font-weight:600">Click to Upload Screenshot</p><button type="button" style="background:#25D366;color:#fff;border:0;padding:.5rem 1.5rem;border-radius:2rem;cursor:pointer;font-weight:600;margin-top:.5rem">📱 Choose File</button></div>
+                    <input type="file" id="receipt" accept="image/*" capture="environment" style="display:none" onchange="previewReceipt(event)">
+                    <div class="prev" id="receiptPreview"><img id="receiptImg" src=""><p id="receiptName" style="font-size:.9rem;color:#2e7d32;font-weight:600;margin-top:.5rem"></p><button type="button" onclick="event.stopPropagation();document.getElementById('receipt').click()" style="background:#d4af37;color:#0a2f1f;border:0;padding:.3rem .8rem;border-radius:1.5rem;cursor:pointer;font-weight:600;font-size:.75rem">🔄 Change</button> <button type="button" onclick="event.stopPropagation();removeReceipt()" style="background:#c41e3a;color:#fff;border:0;padding:.3rem .8rem;border-radius:1.5rem;cursor:pointer;font-weight:600;font-size:.75rem">✕ Remove</button></div>
+                </div>
+            </div>
+
+            <div class="inp"><label>🔢 Transaction ID</label><input type="text" id="txnId" placeholder="Optional"></div>
+
+            <span class="sec">🏏 COACHING INFO</span>
+            <div class="r2">
+                <div class="inp"><label>Experience</label><select id="experience"><option value="">-- Select --</option><option value="beginner">Beginner</option><option value="school">School</option><option value="club">Club</option><option value="district">District/State</option></select></div>
+                <div class="inp"><label>Batting/Bowling</label><input type="text" id="playingStyle" placeholder="e.g., RHB"></div>
+            </div>
+            <div class="inp"><label>Medical</label><input type="text" id="medical" placeholder="If any"></div>
+
+            <div class="note">
+                <strong>📌 TERMS:</strong>
+                <ul>
+                    <li>📅 Quarterly: Q1 Jun-Sep | Q2 Oct-Dec | Q3 Jan-Mar</li>
+                    <li>❌ No compensatory classes</li>
+                    <li>🚫 No batch changes</li>
+                    <li>👕 Jersey MANDATORY</li>
+                    <li>🏏 Weekend matches - charges extra</li>
+                </ul>
+                <p id="academyInfo" style="margin-top:.5rem;font-size:.8rem"></p>
+                <label style="margin-top:.8rem;display:flex;align-items:center;gap:.5rem"><input type="checkbox" id="consent" required> <strong>✅ I agree to terms</strong></label>
+            </div>
+
+            <button type="submit" class="btn" id="submitBtn">🏏 SUBMIT</button>
         </div>
-        <p class="admin-hint">YN Cricket Academy (PSN) © 2026-27</p>
+        </form>
     </div>
+</div>
 
-    <script>
-        // ==================== ADMIN ACCESS ====================
-        const ADMIN_SECRET = 'ynadmin2026';
-        let isAdminLoggedIn = sessionStorage.getItem('ynAdminLoggedIn') === 'true';
+<script>
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwLuyXNiMeQrilR9vJ6iMYD9HaNwA3zItHgEJY4yfAXv50ZmToLsVd-GXQt7NmRANba/exec';
+const qd={Q1:{s:'2026-06-01',e:'2026-09-30',m:4},Q2:{s:'2026-10-01',e:'2026-12-31',m:3},Q3:{s:'2027-01-01',e:'2027-03-31',m:3}};
+const mf={2:3750,3:4000,4:4250};
 
-        function checkAdminAccess() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const adminKey = urlParams.get('admin');
-            if (adminKey === ADMIN_SECRET) {
-                isAdminLoggedIn = true;
-                sessionStorage.setItem('ynAdminLoggedIn', 'true');
-                openAdminPanel();
-                window.history.replaceState({}, document.title, window.location.pathname);
-            } else if (isAdminLoggedIn) {
-                openAdminPanel();
-            }
-        }
+// Load saved data
+const settings=JSON.parse(localStorage.getItem('ynAcademySettings')||'{}');
+const savedLogo=localStorage.getItem('ynAcademyLogo');
+const savedScanner=localStorage.getItem('ynScannerImage');
 
-        function openAdminPanel() {
-            document.getElementById('adminLogoPanel').classList.add('active');
-            isAdminLoggedIn = true;
-            sessionStorage.setItem('ynAdminLoggedIn', 'true');
-        }
+if(savedLogo){document.getElementById('hlogo').src=savedLogo;document.getElementById('hlogo').classList.add('show');document.getElementById('flogo').src=savedLogo;document.getElementById('flogo').classList.add('show');}
+if(savedScanner){document.getElementById('scannerDisplayArea').innerHTML='<img src="'+savedScanner+'" alt="Scanner" style="max-width:200px;border-radius:1rem;border:2px solid #d4af37"><p style="font-size:.75rem;color:#666">Scan to pay</p>';}
+if(settings.upiId)document.getElementById('upiDisplay').textContent=settings.upiId;
+document.getElementById('academyInfo').innerHTML='📞 <strong>'+(settings.phone||'+91-9606743437')+'</strong> | 📧 <strong>'+(settings.email||'ynsportsforexcellence@gmail.com')+'</strong><br>📍 <strong>'+(settings.address||'Varthur, Bangalore - 560087')+'</strong>';
+document.getElementById('okContact').textContent='📞 '+(settings.phone||'+91-9606743437')+' | 📧 '+(settings.email||'ynsportsforexcellence@gmail.com');
 
-        function closeAdminPanel() {
-            document.getElementById('adminLogoPanel').classList.remove('active');
-            isAdminLoggedIn = false;
-            sessionStorage.removeItem('ynAdminLoggedIn');
-        }
+// ID
+function nid(){let l=parseInt(localStorage.getItem('ynLastId'))||4;let n=l+1;localStorage.setItem('ynLastId',n);return'YN-PSN-202627-'+String(n).padStart(4,'0')}
+if(!localStorage.getItem('ynLastId'))localStorage.setItem('ynLastId','4');
+let cid=nid();document.getElementById('sid').value=cid;document.getElementById('idDisplay').textContent=cid;
 
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && e.shiftKey && e.key === 'A') {
-                e.preventDefault();
-                if (isAdminLoggedIn) {
-                    closeAdminPanel();
-                } else {
-                    const password = prompt('Enter admin password:');
-                    if (password === ADMIN_SECRET) openAdminPanel();
-                    else if (password !== null) alert('Incorrect!');
-                }
-            }
-        });
+// Days
+const chips=document.querySelectorAll('.day'),dchecks=document.querySelectorAll('.dsel');
+chips.forEach(c=>{c.addEventListener('click',function(){const cb=this.querySelector('input');if(cb.disabled)return;cb.checked=!cb.checked;this.classList.toggle('sel',cb.checked);updateFees()})});
+function sc(){chips.forEach(c=>{const cb=c.querySelector('input');c.classList.toggle('sel',cb.checked);c.classList.toggle('dis',cb.disabled)})}
 
-        // ==================== LOGO MANAGEMENT ====================
-        let savedLogoData = localStorage.getItem('ynCricketAcademyLogo') || null;
+function cf(q,d,sd){
+    if(!q||!d||!sd)return{f:0,e:''};
+    if(q==='full')return{f:Math.round(((mf[d]*4)+(mf[d]*3)+(mf[d]*3))*.9),e:'2027-03-31'};
+    const x=qd[q];if(!x)return{f:0,e:''};
+    const qs=new Date(x.s),qe=new Date(x.e),jd=new Date(sd);
+    if(jd>qe)return{f:0,e:''};
+    if(jd<=qs)return{f:mf[d]*x.m,e:x.e};
+    const rem=Math.ceil((qe-jd)/86400000),tot=Math.ceil((qe-qs)/86400000);
+    return{f:Math.round((mf[d]*x.m)*(rem/tot)/100)*100,e:x.e};
+}
 
-        function previewAdminLogo(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const validTypes = ['image/jpeg', 'image/png', 'image/svg+xml', 'image/webp'];
-            if (!validTypes.includes(file.type)) { alert('JPG, PNG, SVG, WebP only.'); return; }
-            if (file.size > 5*1024*1024) { alert('Under 5MB only.'); return; }
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('adminLogoImg').src = e.target.result;
-                document.getElementById('adminLogoImg').style.display = 'block';
-                document.getElementById('adminLogoPlaceholder').style.display = 'none';
-            };
-            reader.readAsDataURL(file);
-        }
+function updateFees(){
+    const q=document.getElementById('quarter').value,d=document.getElementById('batchDays').value,sd=document.getElementById('startDate').value;
+    const os=document.getElementById('oldStudent').checked,ej=document.getElementById('extraJersey').checked;
+    const jOpt=settings.oldJerseyOptional!==false;
+    
+    if(d==='4'){dchecks.forEach(c=>{c.checked=true;c.disabled=true})}else{dchecks.forEach(c=>{c.disabled=false})}
+    sc();
+    
+    // Jersey logic
+    if(os&&jOpt){document.getElementById('jerseyNew').style.display='none';document.getElementById('jerseyOld').style.display='block'}else{document.getElementById('jerseyNew').style.display='block';document.getElementById('jerseyOld').style.display='none';document.getElementById('needJersey').checked=true}
+    
+    const r=cf(q,d,sd);
+    const nj=os&&jOpt?document.getElementById('needJersey').checked:true;
+    const jt=!nj?0:(ej?2000:1000);
+    const rf=os?0:500;
+    const gt=r.f+jt+rf;
+    
+    document.getElementById('coachingFee').textContent='₹'+r.f.toLocaleString('en-IN');
+    document.getElementById('jerseyFee').textContent='₹'+jt;
+    document.getElementById('regFee').textContent='₹'+rf;
+    document.getElementById('grandTotal').textContent='₹'+gt.toLocaleString('en-IN');
+    document.getElementById('regDisp').textContent='Reg: ₹'+rf;
+    document.getElementById('endDate').value=r.e?new Date(r.e).toLocaleDateString('en-IN',{year:'numeric',month:'long',day:'numeric'}):'';
+    document.getElementById('discountNote').innerHTML=q==='full'?'✅ 10% Discount':(r.f<mf[d]*qd[q]?.m?'⚡ Pro-rated':'');
+}
 
-        function saveLogoToCode() {
-            const img = document.getElementById('adminLogoImg');
-            if (!img.src || img.style.display === 'none') { alert('Upload logo first.'); return; }
-            localStorage.setItem('ynCricketAcademyLogo', img.src);
-            savedLogoData = img.src;
-            updateFormLogo(img.src);
-            const msg = document.getElementById('logoSavedMsg');
-            msg.classList.add('show');
-            setTimeout(() => msg.classList.remove('show'), 3000);
-        }
+// Scanner
+function previewReceipt(e){e.stopPropagation();const f=e.target.files[0];if(!f)return;if(!['image/jpeg','image/png','image/webp'].includes(f.type)){alert('JPG/PNG/WebP!');return}if(f.size>10*1024*1024){alert('Max 10MB!');return}const r=new FileReader();r.onload=function(ev){document.getElementById('receiptImg').src=ev.target.result;document.getElementById('receiptName').textContent='✅ '+f.name;document.getElementById('receiptPreview').style.display='block';document.getElementById('uploadPH').style.display='none';document.getElementById('uploadArea').style.borderColor='#25D366'};r.readAsDataURL(f)}
+function removeReceipt(){document.getElementById('receipt').value='';document.getElementById('receiptPreview').style.display='none';document.getElementById('uploadPH').style.display='block';document.getElementById('uploadArea').style.borderColor='#d4af37'}
 
-        function resetLogoToDefault() {
-            localStorage.removeItem('ynCricketAcademyLogo');
-            savedLogoData = null;
-            document.getElementById('adminLogoImg').src = '';
-            document.getElementById('adminLogoImg').style.display = 'none';
-            document.getElementById('adminLogoPlaceholder').style.display = 'block';
-            document.getElementById('adminLogoInput').value = '';
-            updateFormLogo(null);
-        }
+// Submit
+async function submitForm(e){
+    e.preventDefault();
+    if(!document.getElementById('consent').checked){alert('Agree to terms');return false}
+    const d=document.getElementById('batchDays').value;
+    if(d&&d!=='4'&&document.querySelectorAll('.dsel:checked').length!==parseInt(d)){alert('Select '+d+' days');return false}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value)){alert('Valid email!');return false}
+    
+    document.getElementById('loading').classList.add('on');document.getElementById('submitBtn').disabled=true;
+    
+    const os=document.getElementById('oldStudent').checked;
+    const jOpt=settings.oldJerseyOptional!==false;
+    const nj=os&&jOpt?document.getElementById('needJersey').checked:true;
+    const q=document.getElementById('quarter').value,da=document.getElementById('batchDays').value,sd=document.getElementById('startDate').value;
+    const r=cf(q,da,sd);
+    const jt=!nj?0:(document.getElementById('extraJersey').checked?2000:1000);
+    const rf=os?0:500;
+    
+    const data={
+        studentId:cid,timestamp:new Date().toISOString(),
+        studentName:document.getElementById('sname').value,
+        parentName:document.getElementById('pname').value,
+        age:document.getElementById('age').value,dob:document.getElementById('dob').value,
+        mobile:document.getElementById('mobile').value,email:document.getElementById('email').value,
+        address:document.getElementById('address').value,
+        oldStudent:os,quarter:q,
+        planDetail:q==='full'?'Full Season':(qd[q]?.s+' to '+qd[q]?.e),
+        batch:da+' days/week',
+        selectedDays:Array.from(document.querySelectorAll('.dsel:checked')).map(c=>c.value).join(', '),
+        startDate:sd,endDate:r.e,
+        coachingFee:r.f,jerseyFee:jt,regFee:rf,totalFee:r.f+jt+rf,
+        paymentMode:document.getElementById('paymentMode').value,
+        paidDate:document.getElementById('paidDate').value,
+        receiptFileName:document.getElementById('receipt').files[0]?.name||'N/A',
+        transactionId:document.getElementById('txnId').value||'N/A',
+        experience:document.getElementById('experience').value,
+        playingStyle:document.getElementById('playingStyle').value,
+        medical:document.getElementById('medical').value||'None',consent:true
+    };
+    
+    try{await fetch(SHEET_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})}catch(err){}
+    setTimeout(()=>{
+        document.getElementById('loading').classList.remove('on');
+        document.getElementById('formContent').style.display='none';
+        document.getElementById('okMsg').classList.add('show');
+        document.getElementById('okId').textContent=cid;
+    },1500);
+    return false;
+}
 
-        function updateFormLogo(logoData) {
-            const fi = document.getElementById('formLogoImg');
-            const dd = document.getElementById('defaultLogoDesign');
-            if (logoData) { fi.src = logoData; fi.style.display = 'block'; dd.style.display = 'none'; }
-            else { fi.src = ''; fi.style.display = 'none'; dd.style.display = 'flex'; }
-        }
+function resetForm(){
+    document.getElementById('form').reset();document.getElementById('formContent').style.display='flex';
+    document.getElementById('okMsg').classList.remove('show');document.getElementById('submitBtn').disabled=false;
+    removeReceipt();cid=nid();document.getElementById('sid').value=cid;document.getElementById('idDisplay').textContent=cid;
+    dchecks.forEach(c=>{c.checked=false;c.disabled=false});sc();updateFees();
+    document.getElementById('paidDate').value=new Date().toISOString().split('T')[0];
+}
 
-        function loadSavedLogo() {
-            if (savedLogoData) {
-                updateFormLogo(savedLogoData);
-                document.getElementById('adminLogoImg').src = savedLogoData;
-                document.getElementById('adminLogoImg').style.display = 'block';
-                document.getElementById('adminLogoPlaceholder').style.display = 'none';
-            }
-        }
-
-        // ==================== CONFIG ====================
-        const GOOGLE_SHEET_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
-
-        // ==================== SEQUENTIAL ID GENERATION (START: 0005) ====================
-        function getNextStudentId() {
-            // Get last used number from localStorage
-            let lastId = parseInt(localStorage.getItem('ynLastStudentId')) || 4; // Start before 0005
-            let nextId = lastId + 1;
-            // Save the new last ID
-            localStorage.setItem('ynLastStudentId', nextId);
-            // Format as 4-digit with leading zeros
-            return 'YN-PSN-202627-' + String(nextId).padStart(4, '0');
-        }
-
-        // Initialize if first time
-        if (!localStorage.getItem('ynLastStudentId')) {
-            localStorage.setItem('ynLastStudentId', '4'); // So first ID is 0005
-        }
-
-        let currentStudentId = getNextStudentId();
-        document.getElementById('studentId').value = currentStudentId;
-        document.getElementById('studentIdDisplay').textContent = currentStudentId;
-
-        // ==================== FEE STRUCTURE ====================
-        const quarterlyFees = {
-            Q1: { 2: 15000, 3: 16000, 4: 17000, months: 4, label: 'Q1 (Jun–Sep 2026)' },
-            Q2: { 2: 11250, 3: 12000, 4: 12750, months: 3, label: 'Q2 (Oct–Dec 2026)' },
-            Q3: { 2: 11250, 3: 12000, 4: 12750, months: 3, label: 'Q3 (Jan–Mar 2027)' }
-        };
-
-        function getFull10MonthFee(days) {
-            const q1 = quarterlyFees.Q1[days] || 0;
-            const q2 = quarterlyFees.Q2[days] || 0;
-            const q3 = quarterlyFees.Q3[days] || 0;
-            return Math.round((q1 + q2 + q3) * 0.9);
-        }
-
-        const dayChips = document.querySelectorAll('.day-chip');
-        const dayCheckboxes = document.querySelectorAll('.day-select');
-
-        dayChips.forEach(chip => {
-            chip.addEventListener('click', function(e) {
-                const cb = this.querySelector('input');
-                if (cb.disabled) return;
-                cb.checked = !cb.checked;
-                this.classList.toggle('selected', cb.checked);
-                updateFeeSummary();
-            });
-        });
-
-        function syncDayChips() {
-            dayChips.forEach(chip => {
-                const cb = chip.querySelector('input');
-                chip.classList.toggle('selected', cb.checked);
-                chip.classList.toggle('disabled', cb.disabled);
-            });
-        }
-
-        function updateFeeSummary() {
-            const planType = document.getElementById('planType').value;
-            const quarter = document.getElementById('quarter').value;
-            const days = document.getElementById('batchDays').value;
-            const oldStudent = document.getElementById('oldStudent').checked;
-            const extraJersey = document.getElementById('additionalJersey').checked;
-            const quarterGroup = document.getElementById('quarterGroup');
-            const dayHint = document.getElementById('dayHint');
-
-            if (planType === 'full10') {
-                quarterGroup.style.display = 'none';
-                document.getElementById('quarter').required = false;
-            } else {
-                quarterGroup.style.display = 'block';
-                if (planType === 'quarterly') document.getElementById('quarter').required = true;
-            }
-
-            if (days === '4') {
-                dayCheckboxes.forEach(cb => { cb.checked = true; cb.disabled = true; });
-                dayHint.textContent = '✅ All 4 days (Thu–Sun) auto-selected.';
-            } else if (days === '2' || days === '3') {
-                dayCheckboxes.forEach(cb => { cb.disabled = false; });
-                dayHint.textContent = `Please select exactly ${days} days.`;
-            } else {
-                dayCheckboxes.forEach(cb => { cb.disabled = false; cb.checked = false; });
-                dayHint.textContent = 'Select days matching your batch.';
-            }
-            syncDayChips();
-
-            let coachingFee = 0;
-            let discountMsg = '';
-            if (planType === 'quarterly' && quarter && days && quarterlyFees[quarter]?.[days]) {
-                coachingFee = quarterlyFees[quarter][days];
-            } else if (planType === 'full10' && days) {
-                coachingFee = getFull10MonthFee(days);
-                const orig = (quarterlyFees.Q1[days]||0)+(quarterlyFees.Q2[days]||0)+(quarterlyFees.Q3[days]||0);
-                discountMsg = `✅ 10% discount! (Original: ₹${orig.toLocaleString('en-IN')})`;
-            }
-
-            const jerseyTotal = extraJersey ? 2000 : 1000;
-            const regFee = oldStudent ? 0 : 500;
-            const grandTotal = coachingFee + jerseyTotal + regFee;
-
-            document.getElementById('coachingFee').textContent = '₹' + coachingFee.toLocaleString('en-IN');
-            document.getElementById('jerseyFee').textContent = '₹' + jerseyTotal;
-            document.getElementById('regFee').textContent = '₹' + regFee;
-            document.getElementById('grandTotal').textContent = '₹' + grandTotal.toLocaleString('en-IN');
-            document.getElementById('discountNote').innerHTML = discountMsg;
-            document.getElementById('regFeeDisplay').textContent = 'Reg: ₹' + regFee;
-        }
-
-        function validateDays() {
-            const days = document.getElementById('batchDays').value;
-            if (!days || days === '4') return true;
-            if (document.querySelectorAll('.day-select:checked').length !== parseInt(days)) {
-                alert(`Please select exactly ${days} day(s).`);
-                return false;
-            }
-            return true;
-        }
-
-        async function handleSubmit(event) {
-            event.preventDefault();
-            if (!document.getElementById('consent').checked) { alert('Agree to terms.'); return false; }
-            if (!validateDays()) return false;
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value.trim())) {
-                alert('Valid email required.'); return false;
-            }
-
-            document.getElementById('loadingOverlay').classList.add('active');
-            document.getElementById('submitBtn').disabled = true;
-
-            const planType = document.getElementById('planType').value;
-            const days = document.getElementById('batchDays').value;
-            let coachingFee = 0, planDetail = '';
-            if (planType === 'quarterly') {
-                const q = document.getElementById('quarter').value;
-                coachingFee = quarterlyFees[q]?.[days] || 0;
-                planDetail = quarterlyFees[q]?.label || q;
-            } else {
-                coachingFee = getFull10MonthFee(days);
-                planDetail = 'Full 10 Months (10% off)';
-            }
-
-            const extraJersey = document.getElementById('additionalJersey').checked;
-            const oldStudent = document.getElementById('oldStudent').checked;
-            const jerseyTotal = extraJersey ? 2000 : 1000;
-            const regFee = oldStudent ? 0 : 500;
-            const grandTotal = coachingFee + jerseyTotal + regFee;
-            const mobile = document.getElementById('mobile').value;
-
-            const data = {
-                studentId: currentStudentId, timestamp: new Date().toISOString(),
-                studentName: document.getElementById('studentName').value,
-                parentName: document.getElementById('parentName').value,
-                age: document.getElementById('age').value, dob: document.getElementById('dob').value,
-                mobile, email: document.getElementById('email').value.trim(),
-                address: document.getElementById('address').value,
-                oldStudent, planType, planDetail, batch: days + ' days/week',
-                selectedDays: Array.from(document.querySelectorAll('.day-select:checked')).map(cb => cb.value).join(', '),
-                coachingFee, jerseyFee: jerseyTotal, regFee, totalFee: grandTotal,
-                paymentMode: document.getElementById('paymentMode').value,
-                paidDate: document.getElementById('paidDate').value,
-                receipt: document.getElementById('receipt').files[0]?.name || 'N/A',
-                experience: document.getElementById('experience').value,
-                playingStyle: document.getElementById('playingStyle').value,
-                medical: document.getElementById('medical').value || 'None',
-                consent: true
-            };
-
-            try {
-                await fetch(GOOGLE_SHEET_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-                document.getElementById('loadingOverlay').classList.remove('active');
-                document.getElementById('formContent').style.display = 'none';
-                document.getElementById('successMessage').classList.add('show');
-                document.getElementById('successId').textContent = currentStudentId;
-                if (confirm('✅ Saved! Open WhatsApp?')) window.open(`https://wa.me/91${mobile}?text=🏏 YN Academy - ID: ${currentStudentId} - Total: ₹${grandTotal}`, '_blank');
-            } catch(e) {
-                document.getElementById('loadingOverlay').classList.remove('active');
-                document.getElementById('submitBtn').disabled = false;
-                alert('Error. Try again.');
-            }
-            return false;
-        }
-
-        function resetForm() {
-            document.getElementById('registrationForm').reset();
-            document.getElementById('formContent').style.display = 'flex';
-            document.getElementById('successMessage').classList.remove('show');
-            document.getElementById('submitBtn').disabled = false;
-            
-            // Generate NEW sequential ID for next student
-            currentStudentId = getNextStudentId();
-            document.getElementById('studentId').value = currentStudentId;
-            document.getElementById('studentIdDisplay').textContent = currentStudentId;
-            
-            dayCheckboxes.forEach(cb => { cb.checked = false; cb.disabled = false; });
-            syncDayChips(); updateFeeSummary();
-            document.getElementById('paidDate').value = new Date().toISOString().split('T')[0];
-        }
-
-        window.onload = function() {
-            document.getElementById('paidDate').value = new Date().toISOString().split('T')[0];
-            document.getElementById('dob').max = new Date().toISOString().split('T')[0];
-            loadSavedLogo();
-            checkAdminAccess();
-            updateFeeSummary();
-        };
-
-        ['planType','quarter','batchDays'].forEach(id => document.getElementById(id).addEventListener('change', updateFeeSummary));
-        document.getElementById('oldStudent').addEventListener('change', updateFeeSummary);
-        document.getElementById('additionalJersey').addEventListener('change', updateFeeSummary);
-    </script>
+window.onload=function(){document.getElementById('paidDate').value=new Date().toISOString().split('T')[0];document.getElementById('dob').max=new Date().toISOString().split('T')[0];updateFees()};
+['quarter','batchDays'].forEach(id=>document.getElementById(id).addEventListener('change',updateFees));
+document.getElementById('startDate').addEventListener('change',updateFees);
+document.getElementById('oldStudent').addEventListener('change',updateFees);
+document.getElementById('extraJersey').addEventListener('change',updateFees);
+document.getElementById('needJersey').addEventListener('change',updateFees);
+</script>
 </body>
 </html>
